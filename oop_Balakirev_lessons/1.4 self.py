@@ -12,22 +12,22 @@
 # "Воспроизведение filemedia2"
 
 
-# class MediaPlayer:
-#     def open(self, file):
-#         self.filename = file
-#
-#     def play(self):
-#         print(f"Воспроизведение {self.filename}")
-#
-#
-# media1 = MediaPlayer()
-# media2 = MediaPlayer()
-#
-# media1.open('filemedia1')
-# media2.open('filemedia2')
-#
-# media1.play()
-# media2.play()
+class MediaPlayer:
+    def open(self, file):
+        self.filename = file
+
+    def play(self):
+        print(f"Воспроизведение {self.filename}")
+
+
+media1 = MediaPlayer()
+media2 = MediaPlayer()
+
+media1.open('filemedia1')
+media2.open('filemedia2')
+
+media1.play()
+media2.play()
 
 
 # Подвиг 5. Объявите класс с именем Graph и методами:
@@ -53,20 +53,20 @@
 # "10 0 2 5 7"
 
 
-# class Graph:
-#     LIMIT_Y = [0, 10]
-#
-#     def set_data(self, data):
-#         self.data = data
-#
-#     def draw(self):
-#         res = ' '.join(map(str, filter(lambda x: Graph.LIMIT_Y[0] <= x <= Graph.LIMIT_Y[1], self.data)))
-#         print(res)
-#
-#
-# graph_1 = Graph()
-# graph_1.set_data([10, -5, 100, 20, 0, 80, 45, 2, 5, 7])
-# graph_1.draw()
+class Graph:
+    LIMIT_Y = [0, 10]
+
+    def set_data(self, data):
+        self.data = data
+
+    def draw(self):
+        res = ' '.join(map(str, filter(lambda x: Graph.LIMIT_Y[0] <= x <= Graph.LIMIT_Y[1], self.data)))
+        print(res)
+
+
+graph_1 = Graph()
+graph_1.set_data([10, -5, 100, 20, 0, 80, 45, 2, 5, 7])
+graph_1.draw()
 
 
 # Подвиг 7. Имеется следующий класс для считывания информации из входного потока:
@@ -107,31 +107,31 @@
 # 512
 
 
-# import sys
-#
-#
-# # здесь объявляется класс StreamData
-# class StreamData:
-#     def create(self, fields, lst_values):
-#         if len(fields) != len(lst_values):
-#             return False
-#         for i in range(len(fields)):
-#             setattr(self, fields[i], lst_values[i])
-#         return True
-#
-# class StreamReader:
-#     FIELDS = ('id', 'title', 'pages')
-#
-#     def readlines(self):
-#         lst_in = list(map(str.strip, sys.stdin.readlines()))  # считывание списка строк из входного потока
-#         sd = StreamData()
-#         res = sd.create(self.FIELDS, lst_in)
-#         return sd, res
-#
-#
-# sr = StreamReader()
-# data, result = sr.readlines()
-# print(StreamData.__dict__)
+import sys
+
+
+# здесь объявляется класс StreamData
+class StreamData:
+    def create(self, fields, lst_values):
+        if len(fields) != len(lst_values):
+            return False
+        for i in range(len(fields)):
+            setattr(self, fields[i], lst_values[i])
+        return True
+
+class StreamReader:
+    FIELDS = ('id', 'title', 'pages')
+
+    def readlines(self):
+        lst_in = list(map(str.strip, sys.stdin.readlines()))  # считывание списка строк из входного потока
+        sd = StreamData()
+        res = sd.create(self.FIELDS, lst_in)
+        return sd, res
+
+
+sr = StreamReader()
+data, result = sr.readlines()
+print(StreamData.__dict__)
 
 
 # Подвиг 9. Из входного потока читаются строки данных с помощью команды:
@@ -183,30 +183,30 @@
 # 3 Иван 13 1200
 
 
-# import sys
-#
-# # программу не менять, только добавить два метода
-# lst_in = list(map(str.strip, sys.stdin.readlines()))  # считывание списка строк из входного потока
-#
-#
-# class DataBase:
-#     lst_data = []
-#     FIELDS = ('id', 'name', 'old', 'salary')
-#
-#     def insert(self, data):
-#         lst = [x.split() for x in data]
-#         for i in lst:
-#             d = {key: value for key, value in zip(self.FIELDS, i)}
-#             self.lst_data.append(d)
-#
-#     def select(self, a, b):
-#         return self.lst_data[a: b+1]
-#
-#
-# db = DataBase()
-# db.insert(lst_in)
-# a = db.select(0, 4)
-# print(a)
+import sys
+
+# программу не менять, только добавить два метода
+lst_in = list(map(str.strip, sys.stdin.readlines()))  # считывание списка строк из входного потока
+
+
+class DataBase:
+    lst_data = []
+    FIELDS = ('id', 'name', 'old', 'salary')
+
+    def insert(self, data):
+        lst = [x.split() for x in data]
+        for i in lst:
+            d = {key: value for key, value in zip(self.FIELDS, i)}
+            self.lst_data.append(d)
+
+    def select(self, a, b):
+        return self.lst_data[a: b+1]
+
+
+db = DataBase()
+db.insert(lst_in)
+a = db.select(0, 4)
+print(a)
 
 
 # Подвиг 10. Дан класс Translator (для перевода с английского на русский), в котором объявлены три метода:
