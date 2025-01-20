@@ -9,13 +9,13 @@
 # P.S. На экран в программе ничего выводить не нужно.
 
 
-# class Money:
-#     def __init__(self, money):
-#         self.money = money
-#
-#
-# my_money = Money(100)
-# your_money = Money(1000)
+class Money:
+    def __init__(self, money):
+        self.money = money
+
+
+my_money = Money(100)
+your_money = Money(1000)
 
 
 # Подвиг 3. Объявите класс Point так, чтобы объекты этого класса можно было создавать командами:
@@ -33,27 +33,27 @@
 # P.S. На экран в программе ничего выводить не нужно.
 
 
-# class Point:
-#     def __init__(self, x, y, color='black'):
-#         self.x = x
-#         self.y = y
-#         self.color = color
-#
-#
-# points = [Point(x*2+1, x*2+1) for x in range(1000)]
-# points[1].color = 'yellow'
+class Point:
+    def __init__(self, x, y, color='black'):
+        self.x = x
+        self.y = y
+        self.color = color
 
-# points = []
-# x = 1
-# y = 1
-# for i in range(1, 1001):
-#     if i == 2:
-#         pi = Point(x, y, 'yellow')
-#     else:
-#         pi = Point(x, y)
-#     points.append(pi)
-#     x += 2
-#     y += 2
+
+points = [Point(x*2+1, x*2+1) for x in range(1000)]
+points[1].color = 'yellow'
+
+points = []
+x = 1
+y = 1
+for i in range(1, 1001):
+    if i == 2:
+        pi = Point(x, y, 'yellow')
+    else:
+        pi = Point(x, y)
+    points.append(pi)
+    x += 2
+    y += 2
 
 
 # Подвиг 4. Объявите три класса геометрических фигур: Line, Rect, Ellipse. Должна быть возможность создавать
@@ -74,34 +74,34 @@
 #
 # P.S. На экран в программе ничего выводить не нужно.
 
-# import random
-#
-#
-# class Line:
-#     def __init__(self, a, b, c, d):
-#         self.sp = a, b
-#         self.ep = c, d
-#
-#
-# class Rect:
-#     def __init__(self, a, b, c, d):
-#         self.sp = a, b
-#         self.ep = c, d
-#
-#
-# class Ellipse:
-#     def __init__(self, a, b, c, d):
-#         self.sp = a, b
-#         self.ep = c, d
-#
-#
-# lst = [Rect, Line, Ellipse]
-# elements = [random.choice(lst)(*random.sample([x for x in range(1, 100)], 4)) for x in range(217)]
-#
-# for i in elements:
-#     if isinstance(i, Line):
-#         i.sp = 0, 0
-#         i.ep = 0, 0
+import random
+
+
+class Line:
+    def __init__(self, a, b, c, d):
+        self.sp = a, b
+        self.ep = c, d
+
+
+class Rect:
+    def __init__(self, a, b, c, d):
+        self.sp = a, b
+        self.ep = c, d
+
+
+class Ellipse:
+    def __init__(self, a, b, c, d):
+        self.sp = a, b
+        self.ep = c, d
+
+
+lst = [Rect, Line, Ellipse]
+elements = [random.choice(lst)(*random.sample([x for x in range(1, 100)], 4)) for x in range(217)]
+
+for i in elements:
+    if isinstance(i, Line):
+        i.sp = 0, 0
+        i.ep = 0, 0
 
 
 # Подвиг 5. Объявите класс TriangleChecker, объекты которого можно было бы создавать командой:
@@ -124,26 +124,26 @@
 # is_triangle() из объекта tr и выведите результат на экран (код, который она вернет).
 
 
-# class TriangleChecker:
-#     def __init__(self, a, b, c):
-#         self.a = a
-#         self.b = b
-#         self.c = c
-#
-#     def is_triangle(self):
-#         lst = [self.a, self.b, self.c]
-#         if any(map(lambda x: type(x) is not float and type(x) is not int or x <= 0, lst)):
-#             return 1
-#         lst.sort(reverse=True)
-#         if lst[0] > lst[1] + lst[2]:
-#             return 2
-#
-#         return 3
-#
-#
-# a, b, c = map(int, input().split())
-# tr = TriangleChecker(a, b, c)
-# print(tr.is_triangle())
+class TriangleChecker:
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
+
+    def is_triangle(self):
+        lst = [self.a, self.b, self.c]
+        if any(map(lambda x: type(x) is not float and type(x) is not int or x <= 0, lst)):
+            return 1
+        lst.sort(reverse=True)
+        if lst[0] > lst[1] + lst[2]:
+            return 2
+
+        return 3
+
+
+a, b, c = map(int, input().split())
+tr = TriangleChecker(a, b, c)
+print(tr.is_triangle())
 
 
 # Подвиг 6. Объявите класс Graph, объекты которого можно было бы создавать с помощью команды:
@@ -188,47 +188,47 @@
 # Отображение данных закрыто
 
 
-# class Graph:
-#     def __init__(self, data, is_show=True):
-#         self.data = data[:]
-#         self.is_show = is_show
-#
-#     def set_data(self, data):
-#         self.data = data[:]
-#
-#     def get_data(self):
-#         print("Отображение данных закрыто")
-#
-#     def show_table(self):
-#         if self.is_show is False:
-#             self.get_data()
-#         else:
-#             print(*self.data)
-#
-#     def show_graph(self):
-#         if self.is_show is False:
-#             self.get_data()
-#         else:
-#             print(f"Графическое отображение данных:", *self.data)
-#
-#     def show_bar(self):
-#         if self.is_show is False:
-#             self.get_data()
-#         else:
-#             print(f"Столбчатая диаграмма:", *self.data)
-#
-#     def set_show(self, fl_show):
-#         self.is_show = fl_show
-#
-#
-# # считывание списка из входного потока (эту строку не менять)
-# data_graph = list(map(int, input().split()))
-#
-# # здесь создаются объекты классов и вызываются нужные методы
-# gr = Graph(data_graph)
-# gr.show_bar()
-# gr.set_show(fl_show=False)
-# gr.show_table()
+class Graph:
+    def __init__(self, data, is_show=True):
+        self.data = data[:]
+        self.is_show = is_show
+
+    def set_data(self, data):
+        self.data = data[:]
+
+    def get_data(self):
+        print("Отображение данных закрыто")
+
+    def show_table(self):
+        if self.is_show is False:
+            self.get_data()
+        else:
+            print(*self.data)
+
+    def show_graph(self):
+        if self.is_show is False:
+            self.get_data()
+        else:
+            print(f"Графическое отображение данных:", *self.data)
+
+    def show_bar(self):
+        if self.is_show is False:
+            self.get_data()
+        else:
+            print(f"Столбчатая диаграмма:", *self.data)
+
+    def set_show(self, fl_show):
+        self.is_show = fl_show
+
+
+# считывание списка из входного потока (эту строку не менять)
+data_graph = list(map(int, input().split()))
+
+# здесь создаются объекты классов и вызываются нужные методы
+gr = Graph(data_graph)
+gr.show_bar()
+gr.set_show(fl_show=False)
+gr.show_table()
 
 
 # Подвиг 7. Объявите в программе следующие несколько классов:
@@ -268,34 +268,34 @@
 # P.S. Отображать на экране ничего не нужно, только создать объект по указанным требованиям.
 
 
-# class CPU:
-#     def __init__(self, name, fr):
-#         self.name = name
-#         self.fr = fr
-#
-#
-# class Memory:
-#     def __init__(self, name, volume):
-#         self.name = name
-#         self.volume = volume
-#
-#
-# class MotherBoard:
-#     def __init__(self, name, cpu, *args):
-#         self.name = name
-#         self.cpu = cpu
-#         self.total_mem_slots = 4
-#         self.mem_slots = args
-#
-#     def get_config(self):
-#         return [f'Материнская плата: {self.name}',
-#                 f'Центральный процессор: {self.cpu.name}, {self.cpu.fr}',
-#                 f'Слотов памяти: {self.total_mem_slots}',
-#                 f'Память: {'; '.join(map(lambda x: f'{x.name} - {x.volume}', self.mem_slots))}']
-#
-#
-# mb = MotherBoard("ASUS ROG", CPU("Intel Core i7", "3.6GHz"), Memory("Corsair", "16GB"), Memory("Kingston", "8GB"))
-# print(mb.get_config())
+class CPU:
+    def __init__(self, name, fr):
+        self.name = name
+        self.fr = fr
+
+
+class Memory:
+    def __init__(self, name, volume):
+        self.name = name
+        self.volume = volume
+
+
+class MotherBoard:
+    def __init__(self, name, cpu, *args):
+        self.name = name
+        self.cpu = cpu
+        self.total_mem_slots = 4
+        self.mem_slots = args
+
+    def get_config(self):
+        return [f'Материнская плата: {self.name}',
+                f'Центральный процессор: {self.cpu.name}, {self.cpu.fr}',
+                f'Слотов памяти: {self.total_mem_slots}',
+                f'Память: {'; '.join(map(lambda x: f'{x.name} - {x.volume}', self.mem_slots))}']
+
+
+mb = MotherBoard("ASUS ROG", CPU("Intel Core i7", "3.6GHz"), Memory("Corsair", "16GB"), Memory("Kingston", "8GB"))
+print(mb.get_config())
 
 
 # Подвиг 8. Объявите в программе класс Cart (корзина), объекты которого создаются командой:
@@ -336,46 +336,46 @@
 # P.S. Отображать на экране ничего не нужно, только создать объекты по указанным требованиям.
 
 
-# class Cart:
-#     def __init__(self):
-#         self.goods = []
-#
-#     def add(self, *gd):
-#         self.goods += gd
-#
-#     def remove(self, indx):
-#         del self.goods[indx]
-#
-#     def get_list(self):
-#         lst = [f'{x.name}: {x.price}' for x in self.goods]
-#         return lst
-#
-#
-# class Table:
-#     def __init__(self, name, price):
-#         self.name = name
-#         self.price = price
-#
-#
-# class TV(Table):
-#     pass
-#
-#
-# class Notebook(Table):
-#     pass
-#
-#
-# class Cup(Table):
-#     pass
-#
-#
-# cart = Cart()
-# cart.add(TV('LG', 1000), TV('Samsung', 10000), Table('Ikea', 500)
-#          , Notebook('Apple', 30000), Notebook('Samsung', 10000),
-#          Cup('Smile', 10))
-#
-# print(cart.goods)
-# print(cart.get_list())
+class Cart:
+    def __init__(self):
+        self.goods = []
+
+    def add(self, *gd):
+        self.goods += gd
+
+    def remove(self, indx):
+        del self.goods[indx]
+
+    def get_list(self):
+        lst = [f'{x.name}: {x.price}' for x in self.goods]
+        return lst
+
+
+class Table:
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
+
+
+class TV(Table):
+    pass
+
+
+class Notebook(Table):
+    pass
+
+
+class Cup(Table):
+    pass
+
+
+cart = Cart()
+cart.add(TV('LG', 1000), TV('Samsung', 10000), Table('Ikea', 500)
+         , Notebook('Apple', 30000), Notebook('Samsung', 10000),
+         Cup('Smile', 10))
+
+print(cart.goods)
+print(cart.get_list())
 
 
 # Подвиг 9. Вам необходимо реализовать односвязный список (не список языка Python, объекты в списке не
@@ -418,30 +418,30 @@
 # Sample Output:
 
 
-# import sys
-#
-#
-# class ListObject:
-#     def __init__(self, data, next_obj=None):
-#         self.data = data
-#         self.next_obj = next_obj
-#
-#     def link(self, obj):
-#         self.next_obj = obj
-#
-#
-# lst_in = list(map(str.strip, sys.stdin.readlines()))
-#
-# head_obj = ListObject(lst_in[0])
-# tail_obj = ListObject(lst_in[1])
-# head_obj.link(tail_obj)
-#
-# for i in range(2, len(lst_in)):
-#     node = ListObject(lst_in[i])
-#     tail_obj.link(node)
-#     tail_obj = node
-#
-# print(tail_obj.data)
+import sys
+
+
+class ListObject:
+    def __init__(self, data, next_obj=None):
+        self.data = data
+        self.next_obj = next_obj
+
+    def link(self, obj):
+        self.next_obj = obj
+
+
+lst_in = list(map(str.strip, sys.stdin.readlines()))
+
+head_obj = ListObject(lst_in[0])
+tail_obj = ListObject(lst_in[1])
+head_obj.link(tail_obj)
+
+for i in range(2, len(lst_in)):
+    node = ListObject(lst_in[i])
+    tail_obj.link(node)
+    tail_obj = node
+
+print(tail_obj.data)
 
 
 # Большой подвиг 10. Объявите два класса:
