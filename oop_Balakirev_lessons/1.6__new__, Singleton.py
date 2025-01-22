@@ -8,13 +8,13 @@
 #
 # P.S. В программе объявить только класс, выводить на экран ничего не нужно.
 
-# class AbstractClass:
-#     def __new__(cls, *args, **kwargs):
-#         return ("Ошибка: нельзя создавать объекты абстрактного класса")
-#
-#
-# obj = AbstractClass()
-# print(obj)
+class AbstractClass:
+    def __new__(cls, *args, **kwargs):
+        return ("Ошибка: нельзя создавать объекты абстрактного класса")
+
+
+obj = AbstractClass()
+print(obj)
 
 
 # Подвиг 7. Объявите класс SingletonFive, с помощью которого можно было бы создавать объекты командой:
@@ -31,23 +31,23 @@
 # P.S. В программе на экран ничего выводить не нужно.
 
 
-# class SingletonFive:
-#     _instance = None
-#
-#     def __new__(cls, *args, **kwargs):
-#         for i in args:
-#             if int(i) < 4:
-#                 cls._instance = super().__new__(cls)
-#                 return super().__new__(cls)
-#         return cls._instance
-#
-#     def __init__(self, name):
-#         self.name = name
-#
-#
-# objs = [SingletonFive(str(n)) for n in range(10)]
-# for i in objs:
-#     print(id(i))
+class SingletonFive:
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        for i in args:
+            if int(i) < 4:
+                cls._instance = super().__new__(cls)
+                return super().__new__(cls)
+        return cls._instance
+
+    def __init__(self, name):
+        self.name = name
+
+
+objs = [SingletonFive(str(n)) for n in range(10)]
+for i in objs:
+    print(id(i))
 
 
 # Подвиг 8. В программе объявлена переменная TYPE_OS и два следующих класса:
@@ -72,28 +72,28 @@
 # P.S. В программе на экран ничего выводить не нужно. Только объявить класс Dialog.
 
 
-# TYPE_OS = 1  # 1 - Windows; 2 - Linux
-#
-#
-# class DialogWindows:
-#     name_class = "DialogWindows"
-#
-#
-# class DialogLinux:
-#     name_class = "DialogLinux"
-#
-#
-# class Dialog:
-#     def __new__(cls, *args, **kwargs):
-#         result = super().__new__(DialogWindows) if TYPE_OS == 1 else super().__new__(DialogLinux)
-#         for i in args:
-#             setattr(result, 'name', i)
-#         return result
-#
-#
-# dlg = Dialog('123')
-# print(type(dlg))
-# print(dlg.__dict__)
+TYPE_OS = 1  # 1 - Windows; 2 - Linux
+
+
+class DialogWindows:
+    name_class = "DialogWindows"
+
+
+class DialogLinux:
+    name_class = "DialogLinux"
+
+
+class Dialog:
+    def __new__(cls, *args, **kwargs):
+        result = super().__new__(DialogWindows) if TYPE_OS == 1 else super().__new__(DialogLinux)
+        for i in args:
+            setattr(result, 'name', i)
+        return result
+
+
+dlg = Dialog('123')
+print(type(dlg))
+print(dlg.__dict__)
 
 
 # Подвиг 9 (на повторение материала). Объявите класс Point для представления точек на плоскости.
@@ -111,19 +111,19 @@
 # P.S. В программе на экран ничего выводить не нужно.
 
 
-# class Point:
-#     def __init__(self, x, y):
-#         self.x = x
-#         self.y = y
-#
-#     def clone(self):
-#         pt_clone = Point(self.x, self.y)
-#         return pt_clone
-#
-#
-# pt = Point(1, 2)
-# pt_clone = pt.clone()
-# print(id(pt), id(pt_clone))
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def clone(self):
+        pt_clone = Point(self.x, self.y)
+        return pt_clone
+
+
+pt = Point(1, 2)
+pt_clone = pt.clone()
+print(id(pt), id(pt_clone))
 
 
 # Подвиг 10 (на повторение материала). В программе предполагается реализовать парсер (обработчик) строки
@@ -158,27 +158,27 @@
 # P.S. В программе на экран ничего выводить не нужно.
 
 
-# class Factory:
-#     def build_sequence(self):
-#         lst = []
-#         return lst
-#
-#     def build_number(self, string):
-#         return float(string)
-#
-#
-# class Loader:
-#     def parse_format(self, string, factory):
-#         seq = factory.build_sequence()
-#         for sub in string.split(","):
-#             item = factory.build_number(sub)
-#             seq.append(item)
-#
-#         return seq
-#
-#
-# # эти строчки не менять!
-# ld = Loader()
-# s = input()
-# res = ld.parse_format(s, Factory())
-# print(res)
+class Factory:
+    def build_sequence(self):
+        lst = []
+        return lst
+
+    def build_number(self, string):
+        return float(string)
+
+
+class Loader:
+    def parse_format(self, string, factory):
+        seq = factory.build_sequence()
+        for sub in string.split(","):
+            item = factory.build_number(sub)
+            seq.append(item)
+
+        return seq
+
+
+# эти строчки не менять!
+ld = Loader()
+s = input()
+res = ld.parse_format(s, Factory())
+print(res)
