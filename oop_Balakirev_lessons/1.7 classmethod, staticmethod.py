@@ -29,29 +29,29 @@
 # P.S. В программе на экран ничего выводить не нужно.
 
 
-# class Factory:
-#     @staticmethod
-#     def build_sequence():
-#         return []
-#
-#     @staticmethod
-#     def build_number(string):
-#         return int(string)
-#
-#
-# class Loader:
-#     @staticmethod
-#     def parse_format(string, factory):
-#         seq = factory.build_sequence()
-#         for sub in string.split(","):
-#             item = factory.build_number(sub)
-#             seq.append(item)
-#
-#         return seq
-#
-#
-# # эти строчки не менять!
-# res = Loader.parse_format("1, 2, 3, -5, 10", Factory)
+class Factory:
+    @staticmethod
+    def build_sequence():
+        return []
+
+    @staticmethod
+    def build_number(string):
+        return int(string)
+
+
+class Loader:
+    @staticmethod
+    def parse_format(string, factory):
+        seq = factory.build_sequence()
+        for sub in string.split(","):
+            item = factory.build_number(sub)
+            seq.append(item)
+
+        return seq
+
+
+# эти строчки не менять!
+res = Loader.parse_format("1, 2, 3, -5, 10", Factory)
 
 
 # Подвиг 7. В программе объявлен следующий класс для работы с формами ввода логин/пароль:
@@ -109,47 +109,47 @@
 # нормально.
 
 
-# from string import ascii_lowercase, digits
-#
-#
-# # здесь объявляйте классы TextInput и PasswordInput
-# class TextInput:
-#     CHARS = "абвгдеёжзийклмнопрстуфхцчшщьыъэюя " + ascii_lowercase
-#     CHARS_CORRECT = CHARS + CHARS.upper() + digits
-#     PASS = 'login'
-#
-#     def __init__(self, name, size=10):
-#         self.check_name(name)
-#         self.name = name
-#         self.size = size
-#
-#     def get_html(self):
-#         return f"<p class='{self.PASS}'>{self.name}: <input type='text' size={self.size} />"
-#
-#     @classmethod
-#     def check_name(cls, name):
-#         if 3 <= len(name) <= 50 and set(name) < set(cls.CHARS_CORRECT):
-#             return True
-#         else:
-#             raise ValueError("некорректное поле name")
-#
-#
-# class PasswordInput(TextInput):
-#     PASS = 'password'
-#
-#
-# class FormLogin:
-#     def __init__(self, lgn, psw):
-#         self.login = lgn
-#         self.password = psw
-#
-#     def render_template(self):
-#         return "\n".join(['<form action="#">', self.login.get_html(), self.password.get_html(), '</form>'])
-#
-#
-# # эти строчки не менять
-# login = FormLogin(TextInput("Логин"), PasswordInput("Пароль"))
-# html = login.render_template()
+from string import ascii_lowercase, digits
+
+
+# здесь объявляйте классы TextInput и PasswordInput
+class TextInput:
+    CHARS = "абвгдеёжзийклмнопрстуфхцчшщьыъэюя " + ascii_lowercase
+    CHARS_CORRECT = CHARS + CHARS.upper() + digits
+    PASS = 'login'
+
+    def __init__(self, name, size=10):
+        self.check_name(name)
+        self.name = name
+        self.size = size
+
+    def get_html(self):
+        return f"<p class='{self.PASS}'>{self.name}: <input type='text' size={self.size} />"
+
+    @classmethod
+    def check_name(cls, name):
+        if 3 <= len(name) <= 50 and set(name) < set(cls.CHARS_CORRECT):
+            return True
+        else:
+            raise ValueError("некорректное поле name")
+
+
+class PasswordInput(TextInput):
+    PASS = 'password'
+
+
+class FormLogin:
+    def __init__(self, lgn, psw):
+        self.login = lgn
+        self.password = psw
+
+    def render_template(self):
+        return "\n".join(['<form action="#">', self.login.get_html(), self.password.get_html(), '</form>'])
+
+
+# эти строчки не менять
+login = FormLogin(TextInput("Логин"), PasswordInput("Пароль"))
+html = login.render_template()
 
 
 # Подвиг 8. Объявите класс CardCheck для проверки корректности информации на пластиковых картах.
@@ -177,23 +177,23 @@
 # P.S. В программе только объявить класс. На экран ничего выводить не нужно.
 
 
-# from string import ascii_lowercase, digits
-#
-#
-# class CardCheck:
-#     CHARS_FOR_NAME = ascii_lowercase.upper() + digits
-#
-#     @classmethod
-#     def check_card_number(cls, number):
-#         example = 'XXXX-XXXX-XXXX-XXXX'
-#         if len(example) == len(number):
-#             return all(number[i] in digits if j == "X" else number[i] == j for i, j in enumerate('XXXX-XXXX-XXXX-XXXX'))
-#         return False
-#
-#     @staticmethod
-#     def check_name(name):
-#         return all(x in ascii_lowercase.upper() + ' ' if len(name.split(sep=' ')) == 2 else False for x in name)
-#
+from string import ascii_lowercase, digits
+
+
+class CardCheck:
+    CHARS_FOR_NAME = ascii_lowercase.upper() + digits
+
+    @classmethod
+    def check_card_number(cls, number):
+        example = 'XXXX-XXXX-XXXX-XXXX'
+        if len(example) == len(number):
+            return all(number[i] in digits if j == "X" else number[i] == j for i, j in enumerate('XXXX-XXXX-XXXX-XXXX'))
+        return False
+
+    @staticmethod
+    def check_name(name):
+        return all(x in ascii_lowercase.upper() + ' ' if len(name.split(sep=' ')) == 2 else False for x in name)
+
 #
 # Подвиг 9. Объявите в программе класс Video с двумя методами:
 #
@@ -220,34 +220,34 @@
 # воспроизведите (с помощью метода play класса YouTube) сначала первое, а затем, второе видео.
 
 
-# class Video:
-#     def create(self, name):
-#         self.name = name
-#
-#     def play(self):
-#         print(f"воспроизведение видео {self.name}")
-#
-#
-# class YouTube:
-#     videos = []
-#
-#     @classmethod
-#     def add_video(cls, video):
-#         cls.videos.append(video)
-#
-#     @classmethod
-#     def play(cls, video_indx):
-#         cls.videos[video_indx].play()
-#
-#
-# v1 = Video()
-# v2 = Video()
-# v1.create("Python")
-# v2.create("Python ООП")
-# YouTube.add_video(v1)
-# YouTube.add_video(v2)
-# YouTube.play(0)
-# YouTube.play(1)
+class Video:
+    def create(self, name):
+        self.name = name
+
+    def play(self):
+        print(f"воспроизведение видео {self.name}")
+
+
+class YouTube:
+    videos = []
+
+    @classmethod
+    def add_video(cls, video):
+        cls.videos.append(video)
+
+    @classmethod
+    def play(cls, video_indx):
+        cls.videos[video_indx].play()
+
+
+v1 = Video()
+v2 = Video()
+v1.create("Python")
+v2.create("Python ООП")
+YouTube.add_video(v1)
+YouTube.add_video(v2)
+YouTube.play(0)
+YouTube.play(1)
 
 
 # Подвиг 10 (на повторение). Объявите класс AppStore - интернет-магазин приложений для устройств под iOS.
@@ -276,35 +276,35 @@
 # P.S. В программе нужно только объявить классы с указанным функционалом.
 
 
-# class AppStore:
-#     APPLICATIONS = []
-#
-#     def add_application(self, app):
-#         self.APPLICATIONS.append(app)
-#
-#     def remove_application(self, app):
-#         for i in self.APPLICATIONS:
-#             if i is app:
-#                 self.APPLICATIONS.remove(app)
-#
-#     def block_application(self, app):
-#         self.app.blocked = True
-#
-#     def total_apps(self):
-#         return len(self.APPLICATIONS)
-#
-#
-# class Application:
-#     def __init__(self, name, blocked=False):
-#         self.name = name
-#         self.blocked = blocked
-#
-#
-# a = AppStore()
-# a.add_application(a)
-# print(a.APPLICATIONS)
-# a.remove_application(a)
-# print(a.APPLICATIONS)
+class AppStore:
+    APPLICATIONS = []
+
+    def add_application(self, app):
+        self.APPLICATIONS.append(app)
+
+    def remove_application(self, app):
+        for i in self.APPLICATIONS:
+            if i is app:
+                self.APPLICATIONS.remove(app)
+
+    def block_application(self, app):
+        self.app.blocked = True
+
+    def total_apps(self):
+        return len(self.APPLICATIONS)
+
+
+class Application:
+    def __init__(self, name, blocked=False):
+        self.name = name
+        self.blocked = blocked
+
+
+a = AppStore()
+a.add_application(a)
+print(a.APPLICATIONS)
+a.remove_application(a)
+print(a.APPLICATIONS)
 
 
 # Подвиг 11 (на повторение). Объявите класс для мессенджера с именем Viber. В этом классе должны быть
@@ -335,44 +335,44 @@
 # P.S. Как хранить список сообщений, решите самостоятельно.
 
 
-# class Viber:
-#     dict_message = {}
-#
-#     @classmethod
-#     def add_message(cls, msg):
-#         cls.dict_message[msg] = msg.text
-#
-#     @classmethod
-#     def remove_message(cls, msg):
-#         del cls.dict_message[msg]
-#
-#     @classmethod
-#     def set_like(cls, msg):
-#         msg.fl_like = not msg.fl_like
-#
-#     @classmethod
-#     def show_last_message(cls, x: int):
-#         print(list(cls.dict_message.values())[-x::])
-#
-#     @classmethod
-#     def total_messages(cls):
-#         return len(cls.dict_message)
-#
-#
-# class Message:
-#     def __init__(self, text):
-#         self.text = text
-#         self.fl_like = False
-#
-#
-# msg = Message("Всем привет!")
-# Viber.add_message(msg)
-# Viber.add_message(Message("Это курс по Python ООП."))
-# Viber.add_message(Message("Что вы о нем думаете?"))
-# Viber.set_like(msg)
-# # Viber.remove_message(msg)
-# print(Viber.dict_message, Viber.total_messages())
-# print(Viber.show_last_message(1))
+class Viber:
+    dict_message = {}
+
+    @classmethod
+    def add_message(cls, msg):
+        cls.dict_message[msg] = msg.text
+
+    @classmethod
+    def remove_message(cls, msg):
+        del cls.dict_message[msg]
+
+    @classmethod
+    def set_like(cls, msg):
+        msg.fl_like = not msg.fl_like
+
+    @classmethod
+    def show_last_message(cls, x: int):
+        print(list(cls.dict_message.values())[-x::])
+
+    @classmethod
+    def total_messages(cls):
+        return len(cls.dict_message)
+
+
+class Message:
+    def __init__(self, text):
+        self.text = text
+        self.fl_like = False
+
+
+msg = Message("Всем привет!")
+Viber.add_message(msg)
+Viber.add_message(Message("Это курс по Python ООП."))
+Viber.add_message(Message("Что вы о нем думаете?"))
+Viber.set_like(msg)
+# Viber.remove_message(msg)
+print(Viber.dict_message, Viber.total_messages())
+print(Viber.show_last_message(1))
 
 
 # Время первого испытания. Представьте, что вы получили задание от заказчика. Вас просят реализовать простую
@@ -452,64 +452,64 @@
 # Что-либо выводить на экран не нужно.
 
 
-# class Router:
-#     def __init__(self):
-#         self.buffer = []
-#         self.routing_table = []
-#
-#     def link(self, server):
-#         self.routing_table.append(server)
-#         server.route = self
-#
-#     def unlink(self, server):
-#         self.routing_table.remove(server)
-#
-#     def send_data(self):
-#         for packet in self.buffer:
-#             for server in self.routing_table:
-#                 if packet.send_to_ip == server.ip:
-#                     server.buffer.append(packet)
-#
-#         self.buffer.clear()
-#
-#
-# class Server:
-#     def __init__(self):
-#         self.ip = id(self)
-#         self.buffer = []
-#         self.route = None
-#
-#     def send_data(self, data):
-#         if self.route:
-#             self.route.buffer.append(data)
-#
-#     def get_data(self):
-#         res = self.buffer[:]
-#         self.buffer.clear()
-#         return res
-#
-#     def get_ip(self):
-#         return self.ip
-#
-#
-# class Data:
-#     def __init__(self, str_data, send_to_ip):
-#         self.data = str_data
-#         self.send_to_ip = send_to_ip
-#
-#
-# router = Router()
-# sv_from = Server()
-# sv_from2 = Server()
-# router.link(sv_from)
-# router.link(sv_from2)
-# router.link(Server())
-# router.link(Server())
-# sv_to = Server()
-# router.link(sv_to)
-# sv_from.send_data(Data("Hello", sv_to.get_ip()))
-# sv_from2.send_data(Data("Hello", sv_to.get_ip()))
-# sv_to.send_data(Data("Hi", sv_from.get_ip()))
-# router.send_data()
-# msg_lst_from = sv_from.get_data()
-# msg_lst_to = sv_to.get_data()
+class Router:
+    def __init__(self):
+        self.buffer = []
+        self.routing_table = []
+
+    def link(self, server):
+        self.routing_table.append(server)
+        server.route = self
+
+    def unlink(self, server):
+        self.routing_table.remove(server)
+
+    def send_data(self):
+        for packet in self.buffer:
+            for server in self.routing_table:
+                if packet.send_to_ip == server.ip:
+                    server.buffer.append(packet)
+
+        self.buffer.clear()
+
+
+class Server:
+    def __init__(self):
+        self.ip = id(self)
+        self.buffer = []
+        self.route = None
+
+    def send_data(self, data):
+        if self.route:
+            self.route.buffer.append(data)
+
+    def get_data(self):
+        res = self.buffer[:]
+        self.buffer.clear()
+        return res
+
+    def get_ip(self):
+        return self.ip
+
+
+class Data:
+    def __init__(self, str_data, send_to_ip):
+        self.data = str_data
+        self.send_to_ip = send_to_ip
+
+
+router = Router()
+sv_from = Server()
+sv_from2 = Server()
+router.link(sv_from)
+router.link(sv_from2)
+router.link(Server())
+router.link(Server())
+sv_to = Server()
+router.link(sv_to)
+sv_from.send_data(Data("Hello", sv_to.get_ip()))
+sv_from2.send_data(Data("Hello", sv_to.get_ip()))
+sv_to.send_data(Data("Hi", sv_from.get_ip()))
+router.send_data()
+msg_lst_from = sv_from.get_data()
+msg_lst_to = sv_to.get_data()
