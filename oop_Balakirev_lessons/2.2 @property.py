@@ -1,96 +1,96 @@
-# from string import ascii_letters
-#
-#
-# class Person:
-#     S_RUS = 'абвгдеёжзийклмнопрстуфхцчшзъыьэюя-'
-#     S_RUS_UPPER = S_RUS.upper()
-#
-#     def __init__(self, fio, old, ps, weight):
-#         self.verify_fio(fio)
-#
-#         self.__fio = fio.split()
-#         self.old = old
-#         self.ps = ps
-#         self.weight = weight
-#
-#     @classmethod
-#     def verify_fio(cls, fio):
-#         """ Проверка корректности ФИО """
-#         if type(fio) != str:
-#             raise TypeError('ФИО должно быть строкой')
-#
-#         f = fio.split()
-#         if len(f) != 3:
-#             raise TypeError('Неверный формат записи')
-#
-#         letters = ascii_letters + cls.S_RUS + cls.S_RUS_UPPER
-#         for s in f:
-#             if len(s) < 1:
-#                 raise TypeError('В ФИО должен быть хотя бы один символ')
-#             if len(s.strip(letters)) != 0:
-#                 raise TypeError('В ФИО можно использовать только буквенные символы и дефис')
-#
-#     @classmethod
-#     def verify_old(cls, old):
-#         if type(old) != int or old < 14 or old > 120:
-#             raise TypeError('Возраст должен быть целым числом и в диапазоне [14;120]')
-#
-#     @classmethod
-#     def verify_weight(cls, w):
-#         if type(w) != float or w < 14 or w > 120:
-#             raise TypeError('Вес должен быть вещественным числом от 20 и выше')
-#
-#     @classmethod
-#     def verify_ps(cls, ps):
-#         if type(ps) != str:
-#             raise TypeError('Паспорт должен быть записан в виде строки')
-#
-#         s = ps.split()
-#         if len(s) != 2 or len(s[0]) != 4 or len(s[1]) != 6:
-#             raise TypeError('Неверный формат записи')
-#
-#         for p in s:
-#             if not p.isdigit():
-#                 raise TypeError('Серия и номер паспорта должны быть числами')
-#
-#     @property
-#     def fio(self):
-#         """ Для фио прописываем только геттер """
-#         return self.__fio
-#
-#     @property
-#     def old(self):
-#         return self.__old
-#
-#     @old.setter
-#     def old(self, old):
-#         self.verify_old(old)
-#         self.__old = old
-#
-#     @property
-#     def weight(self):
-#         return self.__weight
-#
-#     @weight.setter
-#     def weight(self, weight):
-#         self.verify_weight(weight)
-#         self.__weight = weight
-#
-#     @property
-#     def passport(self):
-#         return self.__ps
-#
-#     @passport.setter
-#     def passport(self, ps):
-#         self.verify_ps(ps)
-#         self.__ps = ps
-#
-#
-# p = Person('Балакирев Сергей Михайлович', 30, '1234 567890', 80.0)
-# p.old = 40
-# p.passport = '5678 123456'
-# p.weight = 100.0
-# print(p.__dict__)
+from string import ascii_letters
+
+
+class Person:
+    S_RUS = 'абвгдеёжзийклмнопрстуфхцчшзъыьэюя-'
+    S_RUS_UPPER = S_RUS.upper()
+
+    def __init__(self, fio, old, ps, weight):
+        self.verify_fio(fio)
+
+        self.__fio = fio.split()
+        self.old = old
+        self.ps = ps
+        self.weight = weight
+
+    @classmethod
+    def verify_fio(cls, fio):
+        """ Проверка корректности ФИО """
+        if type(fio) != str:
+            raise TypeError('ФИО должно быть строкой')
+
+        f = fio.split()
+        if len(f) != 3:
+            raise TypeError('Неверный формат записи')
+
+        letters = ascii_letters + cls.S_RUS + cls.S_RUS_UPPER
+        for s in f:
+            if len(s) < 1:
+                raise TypeError('В ФИО должен быть хотя бы один символ')
+            if len(s.strip(letters)) != 0:
+                raise TypeError('В ФИО можно использовать только буквенные символы и дефис')
+
+    @classmethod
+    def verify_old(cls, old):
+        if type(old) != int or old < 14 or old > 120:
+            raise TypeError('Возраст должен быть целым числом и в диапазоне [14;120]')
+
+    @classmethod
+    def verify_weight(cls, w):
+        if type(w) != float or w < 14 or w > 120:
+            raise TypeError('Вес должен быть вещественным числом от 20 и выше')
+
+    @classmethod
+    def verify_ps(cls, ps):
+        if type(ps) != str:
+            raise TypeError('Паспорт должен быть записан в виде строки')
+
+        s = ps.split()
+        if len(s) != 2 or len(s[0]) != 4 or len(s[1]) != 6:
+            raise TypeError('Неверный формат записи')
+
+        for p in s:
+            if not p.isdigit():
+                raise TypeError('Серия и номер паспорта должны быть числами')
+
+    @property
+    def fio(self):
+        """ Для фио прописываем только геттер """
+        return self.__fio
+
+    @property
+    def old(self):
+        return self.__old
+
+    @old.setter
+    def old(self, old):
+        self.verify_old(old)
+        self.__old = old
+
+    @property
+    def weight(self):
+        return self.__weight
+
+    @weight.setter
+    def weight(self, weight):
+        self.verify_weight(weight)
+        self.__weight = weight
+
+    @property
+    def passport(self):
+        return self.__ps
+
+    @passport.setter
+    def passport(self, ps):
+        self.verify_ps(ps)
+        self.__ps = ps
+
+
+p = Person('Балакирев Сергей Михайлович', 30, '1234 567890', 80.0)
+p.old = 40
+p.passport = '5678 123456'
+p.weight = 100.0
+print(p.__dict__)
 
 
 # Подвиг 4. Объявите в программе класс Car, в котором реализуйте объект-свойство с именем model для записи
@@ -113,22 +113,22 @@
 # P.S. В программе объявить только класс. На экран ничего выводить не нужно.
 
 
-# class Car:
-#     def __init__(self, model=None):
-#         self.__model = model
-#
-#     @classmethod
-#     def verify_model(cls, model):
-#         return type(model) == str and 2 <= len(model) <= 100
-#
-#     @property
-#     def model(self):
-#         return self.__model
-#
-#     @model.setter
-#     def model(self, model):
-#         if self.verify_model(model):
-#            self.__model = model
+class Car:
+    def __init__(self, model=None):
+        self.__model = model
+
+    @classmethod
+    def verify_model(cls, model):
+        return type(model) == str and 2 <= len(model) <= 100
+
+    @property
+    def model(self):
+        return self.__model
+
+    @model.setter
+    def model(self, model):
+        if self.verify_model(model):
+           self.__model = model
 
 
 # Подвиг 5. Объявите в программе класс WindowDlg, объекты которого предполагается создавать командой:
@@ -159,34 +159,34 @@
 # P.S. В программе нужно объявить только класс с требуемой функциональностью.
 
 
-# class WindowDlg:
-#     def __init__(self, title, width, height):
-#         self.__title = title
-#         self.__width = width
-#         self.__height = height
-#
-#     def show(self):
-#         print(f"{self.__title}: {self.width}, {self.height}")
-#
-#     @property
-#     def width(self):
-#         return self.__width
-#
-#     @width.setter
-#     def width(self, value):
-#         if type(value) == int and 0 <= value <= 10000:
-#             self.__width = value
-#             self.show()
-#
-#     @property
-#     def height(self):
-#         return self.__height
-#
-#     @height.setter
-#     def height(self, value):
-#         if type(value) == int and 0 <= value <= 100:
-#             self.__height = value
-#             self.show()
+class WindowDlg:
+    def __init__(self, title, width, height):
+        self.__title = title
+        self.__width = width
+        self.__height = height
+
+    def show(self):
+        print(f"{self.__title}: {self.width}, {self.height}")
+
+    @property
+    def width(self):
+        return self.__width
+
+    @width.setter
+    def width(self, value):
+        if type(value) == int and 0 <= value <= 10000:
+            self.__width = value
+            self.show()
+
+    @property
+    def height(self):
+        return self.__height
+
+    @height.setter
+    def height(self, value):
+        if type(value) == int and 0 <= value <= 100:
+            self.__height = value
+            self.show()
 
 
 # Подвиг 6. Реализуйте односвязный список (не список Python, не использовать список Python для хранения объектов),
@@ -241,81 +241,81 @@
 # P.S. В программе требуется объявить только классы. На экран ничего выводить не нужно.
 
 
-# class StackObj:
-#     def __init__(self, data):
-#         self.__data = data
-#         self.__next = None
-#
-#     @property
-#     def data(self):
-#         return self.__data
-#
-#     @data.setter
-#     def data(self, value):
-#         self.__data = value
-#
-#     @property
-#     def next(self):
-#         return self.__next
-#
-#     @next.setter
-#     def next(self, value):
-#         if isinstance(value, StackObj) or value is None:
-#             self.__next = value
-#
-#
-# class Stack:
-#
-#     def __init__(self):
-#         self.top = None
-#         self.tail = None
-#
-#     def push(self, obj):
-#         if not self.top:
-#             self.top = obj
-#
-#         elif not self.tail:
-#             self.tail = obj
-#             self.top.next = obj
-#
-#         else:
-#             self.tail.next = obj
-#             self.tail = obj
-#
-#     def pop(self):
-#         node = self.top
-#         res = None
-#         while node:
-#             if node.next is None and node is self.top:
-#                 res = node
-#                 self.top = None
-#                 return res
-#             else:
-#                 ptr = node.next
-#                 if ptr.next is None:
-#                     res = node.next
-#                     node.next = None
-#                     self.tail = node
-#                     return res
-#
-#             node = node.next
-#
-#     def get_data(self):
-#         lst = []
-#         node = self.top
-#         while node:
-#             lst.append(node.data)
-#             node = node.next
-#         return lst
-#
-#
-# st = Stack()
-# st.push(StackObj("obj1"))
-# st.push(StackObj("obj2"))
-# st.push(StackObj("obj3"))
-# st.pop()
-# res = st.get_data()  # ['obj1', 'obj2']
-# print(res)
+class StackObj:
+    def __init__(self, data):
+        self.__data = data
+        self.__next = None
+
+    @property
+    def data(self):
+        return self.__data
+
+    @data.setter
+    def data(self, value):
+        self.__data = value
+
+    @property
+    def next(self):
+        return self.__next
+
+    @next.setter
+    def next(self, value):
+        if isinstance(value, StackObj) or value is None:
+            self.__next = value
+
+
+class Stack:
+
+    def __init__(self):
+        self.top = None
+        self.tail = None
+
+    def push(self, obj):
+        if not self.top:
+            self.top = obj
+
+        elif not self.tail:
+            self.tail = obj
+            self.top.next = obj
+
+        else:
+            self.tail.next = obj
+            self.tail = obj
+
+    def pop(self):
+        node = self.top
+        res = None
+        while node:
+            if node.next is None and node is self.top:
+                res = node
+                self.top = None
+                return res
+            else:
+                ptr = node.next
+                if ptr.next is None:
+                    res = node.next
+                    node.next = None
+                    self.tail = node
+                    return res
+
+            node = node.next
+
+    def get_data(self):
+        lst = []
+        node = self.top
+        while node:
+            lst.append(node.data)
+            node = node.next
+        return lst
+
+
+st = Stack()
+st.push(StackObj("obj1"))
+st.push(StackObj("obj2"))
+st.push(StackObj("obj3"))
+st.pop()
+res = st.get_data()  # ['obj1', 'obj2']
+print(res)
 
 
 # Подвиг 7. Объявите класс RadiusVector2D, объекты которого должны создаваться командами:
@@ -347,42 +347,42 @@
 # P.S. В программе требуется объявить только класс. На экран ничего выводить не нужно.
 
 
-# class RadiusVector2D:
-#     MIN_COORD = -100
-#     MAX_COORD = 1024
-#
-#     def __init__(self, x=0, y=0):
-#         self.__x = self.__y = 0
-#         self.x = x
-#         self.y = y
-#
-#     @property
-#     def x(self):
-#         return self.__x
-#
-#     @x.setter
-#     def x(self, value):
-#         if type(value) in (int, float) and self.MIN_COORD <= value <= self.MAX_COORD:
-#             self.__x = value
-#
-#     @property
-#     def y(self):
-#         return self.__y
-#
-#     @y.setter
-#     def y(self, value):
-#         if type(value) in (int, float) and self.MIN_COORD <= value <= self.MAX_COORD:
-#             self.__y = value
-#
-#     @staticmethod
-#     def norm2(vector):
-#         return vector.x * vector.x + vector.y * vector.y
-#
-#
-# r1 = RadiusVector2D()
-# r2 = RadiusVector2D(1)
-# r3 = RadiusVector2D(4, 5)
-#
+class RadiusVector2D:
+    MIN_COORD = -100
+    MAX_COORD = 1024
+
+    def __init__(self, x=0, y=0):
+        self.__x = self.__y = 0
+        self.x = x
+        self.y = y
+
+    @property
+    def x(self):
+        return self.__x
+
+    @x.setter
+    def x(self, value):
+        if type(value) in (int, float) and self.MIN_COORD <= value <= self.MAX_COORD:
+            self.__x = value
+
+    @property
+    def y(self):
+        return self.__y
+
+    @y.setter
+    def y(self, value):
+        if type(value) in (int, float) and self.MIN_COORD <= value <= self.MAX_COORD:
+            self.__y = value
+
+    @staticmethod
+    def norm2(vector):
+        return vector.x * vector.x + vector.y * vector.y
+
+
+r1 = RadiusVector2D()
+r2 = RadiusVector2D(1)
+r3 = RadiusVector2D(4, 5)
+
 
 
 # Большой подвиг 8. Требуется реализовать программу по работе с решающими деревьями:
@@ -452,67 +452,67 @@
 # P.S. В программе требуется объявить только классы. На экран ничего выводить не нужно.
 
 
-# class TreeObj:
-#     def __init__(self, indx, value=None):
-#         self.indx = indx
-#         self.value = value
-#         self.__left = None
-#         self.__right = None
-#
-#     @property
-#     def left(self):
-#         return self.__left
-#
-#     @left.setter
-#     def left(self, obj):
-#         self.__left = obj
-#
-#     @property
-#     def right(self):
-#         return self.__right
-#
-#     @right.setter
-#     def right(self, obj):
-#         self.__right = obj
-#
-#
-# class DecisionTree:
-#     TOP_OBJ = None
-#
-#     @classmethod
-#     def add_obj(cls, obj, node=None, left=True):
-#         if cls.TOP_OBJ is None:
-#             cls.TOP_OBJ = obj
-#
-#         else:
-#             if left is True:
-#                 node.left = obj
-#             else:
-#                 node.right = obj
-#         return obj
-#
-#     @classmethod
-#     def predict(cls, root, x):
-#         node = cls.TOP_OBJ
-#         while node.left or node.right:
-#             if x[node.indx]:
-#                 node = node.left
-#             else:
-#                 node = node.right
-#         return node.value
-#
-#
-# root = DecisionTree.add_obj(TreeObj(0))
-# v_11 = DecisionTree.add_obj(TreeObj(1), root)
-# v_12 = DecisionTree.add_obj(TreeObj(2), root, False)
-# DecisionTree.add_obj(TreeObj(-1, "будет программистом"), v_11)
-# DecisionTree.add_obj(TreeObj(-1, "будет кодером"), v_11, False)
-# DecisionTree.add_obj(TreeObj(-1, "не все потеряно"), v_12)
-# DecisionTree.add_obj(TreeObj(-1, "безнадежен"), v_12, False)
-#
-# x = [1, 1, 0]
-# res = DecisionTree.predict(root, x) # будет программистом
-# print(res)
+class TreeObj:
+    def __init__(self, indx, value=None):
+        self.indx = indx
+        self.value = value
+        self.__left = None
+        self.__right = None
+
+    @property
+    def left(self):
+        return self.__left
+
+    @left.setter
+    def left(self, obj):
+        self.__left = obj
+
+    @property
+    def right(self):
+        return self.__right
+
+    @right.setter
+    def right(self, obj):
+        self.__right = obj
+
+
+class DecisionTree:
+    TOP_OBJ = None
+
+    @classmethod
+    def add_obj(cls, obj, node=None, left=True):
+        if cls.TOP_OBJ is None:
+            cls.TOP_OBJ = obj
+
+        else:
+            if left is True:
+                node.left = obj
+            else:
+                node.right = obj
+        return obj
+
+    @classmethod
+    def predict(cls, root, x):
+        node = cls.TOP_OBJ
+        while node.left or node.right:
+            if x[node.indx]:
+                node = node.left
+            else:
+                node = node.right
+        return node.value
+
+
+root = DecisionTree.add_obj(TreeObj(0))
+v_11 = DecisionTree.add_obj(TreeObj(1), root)
+v_12 = DecisionTree.add_obj(TreeObj(2), root, False)
+DecisionTree.add_obj(TreeObj(-1, "будет программистом"), v_11)
+DecisionTree.add_obj(TreeObj(-1, "будет кодером"), v_11, False)
+DecisionTree.add_obj(TreeObj(-1, "не все потеряно"), v_12)
+DecisionTree.add_obj(TreeObj(-1, "безнадежен"), v_12, False)
+
+x = [1, 1, 0]
+res = DecisionTree.predict(root, x) # будет программистом
+print(res)
 
 
 # Подвиг 9 (на закрепление). Вам требуется сформировать класс PathLines для описания маршрутов, состоящих
@@ -553,42 +553,42 @@
 # P.S. В программе требуется объявить только классы. На экран ничего выводить не нужно.
 
 
-# class LineTo:
-#     def __init__(self, x=0, y=0):
-#         self.x = x
-#         self.y = y
+class LineTo:
+    def __init__(self, x=0, y=0):
+        self.x = x
+        self.y = y
+
+
+class PathLines:
+    def __init__(self, *args):
+        self.coords = list((LineTo(0, 0),) + args)
+
+    def get_path(self):
+        return self.coords[1:]
+
+    def get_length(self):
+        g = ((self.coords[i - 1], self.coords[i]) for i in range(1, len(self.coords)))
+        return sum(map(lambda t: ((t[0].x - t[1].x) ** 2 + (t[0].y - t[1].y) ** 2) ** 0.5, g))
+
+    def add_line(self, line):
+        self.coords.append(line)
+
+
+p = PathLines(LineTo(1, 2))
+print(p.get_length())  # 2.23606797749979
+
+p.add_line(LineTo(10, 20))
+p.add_line(LineTo(5, 17))
+print(p.get_length())  # 28.191631669843197
+m = p.get_path()
+print(all(isinstance(i, LineTo) for i in m) and len(m) == 3)  # True
 #
+h = PathLines(LineTo(4, 8), LineTo(-10, 30), LineTo(14, 2))
+print(h.get_length())  # 71.8992593599813
 #
-# class PathLines:
-#     def __init__(self, *args):
-#         self.coords = list((LineTo(0, 0),) + args)
-#
-#     def get_path(self):
-#         return self.coords[1:]
-#
-#     def get_length(self):
-#         g = ((self.coords[i - 1], self.coords[i]) for i in range(1, len(self.coords)))
-#         return sum(map(lambda t: ((t[0].x - t[1].x) ** 2 + (t[0].y - t[1].y) ** 2) ** 0.5, g))
-#
-#     def add_line(self, line):
-#         self.coords.append(line)
-#
-#
-# p = PathLines(LineTo(1, 2))
-# print(p.get_length())  # 2.23606797749979
-#
-# p.add_line(LineTo(10, 20))
-# p.add_line(LineTo(5, 17))
-# print(p.get_length())  # 28.191631669843197
-# m = p.get_path()
-# print(all(isinstance(i, LineTo) for i in m) and len(m) == 3)  # True
-# #
-# h = PathLines(LineTo(4, 8), LineTo(-10, 30), LineTo(14, 2))
-# print(h.get_length())  # 71.8992593599813
-# #
-# k = PathLines()
-# print(k.get_length())  # 0
-# print(k.get_path())  # []
+k = PathLines()
+print(k.get_length())  # 0
+print(k.get_path())  # []
 
 
 # Подвиг 10 (на закрепление). Вы создаете телефонную записную книжку. Она определяется классом PhoneBook.
@@ -623,28 +623,28 @@
 # P.S. В программе требуется объявить только классы. На экран ничего выводить не нужно.
 
 
-# class PhoneBook:
-#     def __init__(self):
-#         self.lst_book = list()
-#
-#     def add_phone(self, phone):
-#         self.lst_book.append(phone)
-#
-#     def remove_phone(self, indx):
-#         self.lst_book.pop(indx)
-#
-#     def get_phone_list(self):
-#         return self.lst_book
-# 
-#
-# class PhoneNumber:
-#     def __init__(self, number, fio):
-#         self.number = number
-#         self.fio = fio
-#
-#
-# p = PhoneBook()
-# p.add_phone(PhoneNumber(12345678901, "Сергей Балакирев"))
-# p.add_phone(PhoneNumber(21345678901, "Панда"))
-# phones = p.get_phone_list()
-# print(phones)
+class PhoneBook:
+    def __init__(self):
+        self.lst_book = list()
+
+    def add_phone(self, phone):
+        self.lst_book.append(phone)
+
+    def remove_phone(self, indx):
+        self.lst_book.pop(indx)
+
+    def get_phone_list(self):
+        return self.lst_book
+
+
+class PhoneNumber:
+    def __init__(self, number, fio):
+        self.number = number
+        self.fio = fio
+
+
+p = PhoneBook()
+p.add_phone(PhoneNumber(12345678901, "Сергей Балакирев"))
+p.add_phone(PhoneNumber(21345678901, "Панда"))
+phones = p.get_phone_list()
+print(phones)
