@@ -25,23 +25,23 @@
 # P.S. На экран ничего выводить не нужно.
 
 
-# class Book:
-#     TYPE_DATA = {'title': str, 'author': str, 'pages': int, 'year': int}
-#
-#     def __init__(self,title='', author='', pages=0, year=0):
-#         self.title = title
-#         self.author = author
-#         self.pages = pages
-#         self.year = year
-#
-#     def __setattr__(self, key, value):
-#         if key in self.TYPE_DATA and type(value) == self.TYPE_DATA[key]:
-#             object.__setattr__(self, key, value)
-#         else:
-#             raise TypeError("Неверный тип присваиваемых данных.")
-#
-#
-# book = Book('Python ООП', 'Сергей Балакирев', 123, 2022)
+class Book:
+    TYPE_DATA = {'title': str, 'author': str, 'pages': int, 'year': int}
+
+    def __init__(self,title='', author='', pages=0, year=0):
+        self.title = title
+        self.author = author
+        self.pages = pages
+        self.year = year
+
+    def __setattr__(self, key, value):
+        if key in self.TYPE_DATA and type(value) == self.TYPE_DATA[key]:
+            object.__setattr__(self, key, value)
+        else:
+            raise TypeError("Неверный тип присваиваемых данных.")
+
+
+book = Book('Python ООП', 'Сергей Балакирев', 123, 2022)
 
 
 # Подвиг 4. Вы создаете интернет-магазин. Для этого нужно объявить два класса:
@@ -92,52 +92,52 @@
 # P.S. На экран ничего выводить не нужно.
 
 
-# class Shop:
-#     def __init__(self, name):
-#         self.name = name
-#         self.goods = []
-#
-#     def add_product(self, product):
-#         self.goods.append(product)
-#
-#     def remove_product(self, product):
-#         self.goods.remove(product)
-#
-#
-# class Product:
-#     ID = 0
-#     TYPE_DATA = {'name': (str, ), 'weight': (int, float), 'price': (int, float), 'id': (int, float)}
-#
-#     def __new__(cls, *args, **kwargs):
-#         cls.ID += 1
-#         return super().__new__(cls)
-#
-#     def __init__(self, name, weight, price):
-#         self.id = self.ID
-#         self.name = name
-#         self.weight = weight
-#         self.price = price
-#
-#     def __setattr__(self, key, value):
-#         if key == 'name' and type(value) in self.TYPE_DATA[key]:
-#             object.__setattr__(self, key, value)
-#         elif key in self.TYPE_DATA and type(value) in self.TYPE_DATA[key] and value >= 0:
-#             object.__setattr__(self, key, value)
-#         else:
-#             raise TypeError("Неверный тип присваиваемых данных.")
-#
-#     def __delattr__(self, item):
-#         if item == 'id':
-#             raise AttributeError("Атрибут id удалять запрещено.")
-#         object.__delattr__(self, item)
-#
-#
-# shop = Shop("Балакирев и К")
-# book = Product("Python ООП", 100, 1024)
-# shop.add_product(book)
-# shop.add_product(Product("Python", 150, 512))
-# for p in shop.goods:
-#     print(f"{p.name}, {p.weight}, {p.price}")
+class Shop:
+    def __init__(self, name):
+        self.name = name
+        self.goods = []
+
+    def add_product(self, product):
+        self.goods.append(product)
+
+    def remove_product(self, product):
+        self.goods.remove(product)
+
+
+class Product:
+    ID = 0
+    TYPE_DATA = {'name': (str, ), 'weight': (int, float), 'price': (int, float), 'id': (int, float)}
+
+    def __new__(cls, *args, **kwargs):
+        cls.ID += 1
+        return super().__new__(cls)
+
+    def __init__(self, name, weight, price):
+        self.id = self.ID
+        self.name = name
+        self.weight = weight
+        self.price = price
+
+    def __setattr__(self, key, value):
+        if key == 'name' and type(value) in self.TYPE_DATA[key]:
+            object.__setattr__(self, key, value)
+        elif key in self.TYPE_DATA and type(value) in self.TYPE_DATA[key] and value >= 0:
+            object.__setattr__(self, key, value)
+        else:
+            raise TypeError("Неверный тип присваиваемых данных.")
+
+    def __delattr__(self, item):
+        if item == 'id':
+            raise AttributeError("Атрибут id удалять запрещено.")
+        object.__delattr__(self, item)
+
+
+shop = Shop("Балакирев и К")
+book = Product("Python ООП", 100, 1024)
+shop.add_product(book)
+shop.add_product(Product("Python", 150, 512))
+for p in shop.goods:
+    print(f"{p.name}, {p.weight}, {p.price}")
 
 
 # Подвиг 5. Необходимо создать программу для обучающего курса. Для этого объявляются три класса:
@@ -209,62 +209,62 @@
 # P.S. На экран ничего выводить не нужно.
 
 
-# class Course:
-#     def __init__(self, name):
-#         self.name = name
-#         self.modules = []
-#
-#     def add_module(self, module):
-#         self.modules.append(module)
-#
-#     def remove_module(self, indx):
-#         del self.modules[indx]
-#
-#
-# class Module:
-#     def __init__(self, name):
-#         self.name = name
-#         self.lessons = []
-#
-#     def add_lesson(self, lesson):
-#         self.lessons.append(lesson)
-#
-#     def remove_lesson(self, indx):
-#         del self.lessons[indx]
-#
-#
-# class LessonItem:
-#     attrs = {'title': (str, ), 'practices': (int, ), 'duration': (int, )}
-#
-#     def __init__(self, title, practices, duration):
-#         self.title = title
-#         self.practices = practices
-#         self.duration = duration
-#
-#     def __setattr__(self, key, value):
-#         if key in self.attrs and type(value) in self.attrs[key]:
-#             object.__setattr__(self, key, value)
-#         else:
-#             raise TypeError("Неверный тип присваиваемых данных.")
-#
-#     def __getattr__(self, item):
-#         return False
-#
-#     def __delattr__(self, item):
-#         if item not in self.attrs.keys():
-#             object.__delattr__(self, item)
-#
-#
-# course = Course("Python ООП")
-# module_1 = Module("Часть первая")
-# module_1.add_lesson(LessonItem("Урок 1", 7, 1000))
-# module_1.add_lesson(LessonItem("Урок 2", 10, 1200))
-# module_1.add_lesson(LessonItem("Урок 3", 5, 800))
-# course.add_module(module_1)
-# module_2 = Module("Часть вторая")
-# module_2.add_lesson(LessonItem("Урок 1", 7, 1000))
-# module_2.add_lesson(LessonItem("Урок 2", 10, 1200))
-# course.add_module(module_2)
+class Course:
+    def __init__(self, name):
+        self.name = name
+        self.modules = []
+
+    def add_module(self, module):
+        self.modules.append(module)
+
+    def remove_module(self, indx):
+        del self.modules[indx]
+
+
+class Module:
+    def __init__(self, name):
+        self.name = name
+        self.lessons = []
+
+    def add_lesson(self, lesson):
+        self.lessons.append(lesson)
+
+    def remove_lesson(self, indx):
+        del self.lessons[indx]
+
+
+class LessonItem:
+    attrs = {'title': (str, ), 'practices': (int, ), 'duration': (int, )}
+
+    def __init__(self, title, practices, duration):
+        self.title = title
+        self.practices = practices
+        self.duration = duration
+
+    def __setattr__(self, key, value):
+        if key in self.attrs and type(value) in self.attrs[key]:
+            object.__setattr__(self, key, value)
+        else:
+            raise TypeError("Неверный тип присваиваемых данных.")
+
+    def __getattr__(self, item):
+        return False
+
+    def __delattr__(self, item):
+        if item not in self.attrs.keys():
+            object.__delattr__(self, item)
+
+
+course = Course("Python ООП")
+module_1 = Module("Часть первая")
+module_1.add_lesson(LessonItem("Урок 1", 7, 1000))
+module_1.add_lesson(LessonItem("Урок 2", 10, 1200))
+module_1.add_lesson(LessonItem("Урок 3", 5, 800))
+course.add_module(module_1)
+module_2 = Module("Часть вторая")
+module_2.add_lesson(LessonItem("Урок 1", 7, 1000))
+module_2.add_lesson(LessonItem("Урок 2", 10, 1200))
+course.add_module(module_2)
 
 
 # Подвиг 6. Вам необходимо написать программу описания музеев. Для этого нужно объявить класс Museum,
@@ -318,52 +318,52 @@
 # P.S. На экран ничего выводить не нужно.
 
 
-# class Museum:
-#     def __init__(self, name):
-#         self.name = name
-#         self.exhibits = []
-#
-#     def add_exhibit(self, obj):
-#         self.exhibits.append(obj)
-#
-#     def remove_exhibit(self, obj):
-#         if obj in self.exhibits:
-#             self.exhibits.remove(obj)
-#
-#     def get_info_exhibit(self, indx):
-#         return f"Описание экспоната {self.exhibits[indx].name}: {self.exhibits[indx].descr}"
-#
-#
-# class Picture:
-#     def __init__(self, name, author, descr):
-#         self.name = name
-#         self.author = author
-#         self.descr = descr
-#
-#
-# class Mummies:
-#     def __init__(self, name, location, descr):
-#         self.name = name
-#         self.location = location
-#         self.descr = descr
-#
-#
-# class Papyri:
-#     def __init__(self, name, date, descr):
-#         self.name = name
-#         self.date = date
-#         self.descr = descr
-#
-#
-# mus = Museum("Эрмитаж")
-# mus.add_exhibit(Picture("Балакирев с подписчиками пишет письмо иноземному султану", "Неизвестный автор",
-#                         "Вдохновляющая, устрашающая, волнующая картина"))
-# mus.add_exhibit(Mummies("Балакирев", "Древняя Россия", "Просветитель XXI века, удостоенный мумификации"))
-# p = Papyri("Ученья для, не злата ради", "Древняя Россия",
-#            "Самое древнее найденное рукописное свидетельство о языках программирования")
-# mus.add_exhibit(p)
-# for x in mus.exhibits:
-#     print(x.descr)
+class Museum:
+    def __init__(self, name):
+        self.name = name
+        self.exhibits = []
+
+    def add_exhibit(self, obj):
+        self.exhibits.append(obj)
+
+    def remove_exhibit(self, obj):
+        if obj in self.exhibits:
+            self.exhibits.remove(obj)
+
+    def get_info_exhibit(self, indx):
+        return f"Описание экспоната {self.exhibits[indx].name}: {self.exhibits[indx].descr}"
+
+
+class Picture:
+    def __init__(self, name, author, descr):
+        self.name = name
+        self.author = author
+        self.descr = descr
+
+
+class Mummies:
+    def __init__(self, name, location, descr):
+        self.name = name
+        self.location = location
+        self.descr = descr
+
+
+class Papyri:
+    def __init__(self, name, date, descr):
+        self.name = name
+        self.date = date
+        self.descr = descr
+
+
+mus = Museum("Эрмитаж")
+mus.add_exhibit(Picture("Балакирев с подписчиками пишет письмо иноземному султану", "Неизвестный автор",
+                        "Вдохновляющая, устрашающая, волнующая картина"))
+mus.add_exhibit(Mummies("Балакирев", "Древняя Россия", "Просветитель XXI века, удостоенный мумификации"))
+p = Papyri("Ученья для, не злата ради", "Древняя Россия",
+           "Самое древнее найденное рукописное свидетельство о языках программирования")
+mus.add_exhibit(p)
+for x in mus.exhibits:
+    print(x.descr)
 
 
 # Подвиг 7 (на повторение). Объявите класс SmartPhone, объекты которого предполагается создавать командой:
@@ -405,42 +405,42 @@
 # P.S. На экран ничего выводить не нужно.
 
 
-# class SmartPhone:
-#     def __init__(self, model):
-#         self.model = model
-#         self.apps = []
-#
-#     def add_app(self, app):
-#         if len(tuple(filter(lambda x: type(x) == type(app), self.apps))) == 0:
-#             self.apps.append(app)
-#
-#     def remove_app(self, app):
-#         self.apps.remove(app)
-#
-#
-# class AppVK:
-#     def __init__(self):
-#         self.name = 'ВКонтакте'
-#
-#
-# class AppYouTube:
-#     def __init__(self, memory_max=1024):
-#         self.name = "YouTube"
-#         self.memory_max = memory_max
-#
-#
-# class AppPhone:
-#     def __init__(self, list):
-#         self.name = 'Phone'
-#         self.phone_list = list
-#
-#
-# sm = SmartPhone("Honor 1.0")
-# sm.add_app(AppVK())
-# sm.add_app(AppVK())  # второй раз добавляться не должно
-# sm.add_app(AppYouTube(2048))
-# for a in sm.apps:
-#     print(a.name)
+class SmartPhone:
+    def __init__(self, model):
+        self.model = model
+        self.apps = []
+
+    def add_app(self, app):
+        if len(tuple(filter(lambda x: type(x) == type(app), self.apps))) == 0:
+            self.apps.append(app)
+
+    def remove_app(self, app):
+        self.apps.remove(app)
+
+
+class AppVK:
+    def __init__(self):
+        self.name = 'ВКонтакте'
+
+
+class AppYouTube:
+    def __init__(self, memory_max=1024):
+        self.name = "YouTube"
+        self.memory_max = memory_max
+
+
+class AppPhone:
+    def __init__(self, list):
+        self.name = 'Phone'
+        self.phone_list = list
+
+
+sm = SmartPhone("Honor 1.0")
+sm.add_app(AppVK())
+sm.add_app(AppVK())  # второй раз добавляться не должно
+sm.add_app(AppYouTube(2048))
+for a in sm.apps:
+    print(a.name)
 
 
 # Подвиг 8. Объявите класс Circle (окружность), объекты которого должны создаваться командой:
@@ -476,56 +476,56 @@
 # P.S. На экран ничего выводить не нужно.
 
 
-# class Circle:
-#     def __init__(self, x, y, radius):
-#         self.x = x
-#         self.y = y
-#         self.radius = radius
-#
-#     @property
-#     def x(self):
-#         return self.__x
-#
-#     @x.setter
-#     def x(self, value):
-#         self.__x = value
-#
-#     @property
-#     def y(self):
-#         return self.__y
-#
-#     @y.setter
-#     def y(self, value):
-#         self.__y = value
-#
-#     @property
-#     def radius(self):
-#         return self.__radius
-#
-#     @radius.setter
-#     def radius(self, value):
-#         self.__radius = value
-#
-#     def __setattr__(self, key, value):
-#         if type(value) in (int, float) and key == 'radius' and value > 0:
-#             super().__setattr__(key, value)
-#
-#         elif type(value) in (int, float) and key != 'radius':
-#             super().__setattr__(key, value)
-#
-#         elif type(value) not in (int, float):
-#             raise TypeError("Неверный тип присваиваемых данных.")
-#
-#     def __getattr__(self, item):
-#         return False
-#
-#
-# circle = Circle(10.5, 7, 22)
-# circle.radius = -10 # прежнее значение не должно меняться, т.к. отрицательный радиус недопустим
-# x, y = circle.x, circle.y
-# res = circle.name # False, т.к. атрибут name не существует
-#
-# print(circle.radius)
+class Circle:
+    def __init__(self, x, y, radius):
+        self.x = x
+        self.y = y
+        self.radius = radius
+
+    @property
+    def x(self):
+        return self.__x
+
+    @x.setter
+    def x(self, value):
+        self.__x = value
+
+    @property
+    def y(self):
+        return self.__y
+
+    @y.setter
+    def y(self, value):
+        self.__y = value
+
+    @property
+    def radius(self):
+        return self.__radius
+
+    @radius.setter
+    def radius(self, value):
+        self.__radius = value
+
+    def __setattr__(self, key, value):
+        if type(value) in (int, float) and key == 'radius' and value > 0:
+            super().__setattr__(key, value)
+
+        elif type(value) in (int, float) and key != 'radius':
+            super().__setattr__(key, value)
+
+        elif type(value) not in (int, float):
+            raise TypeError("Неверный тип присваиваемых данных.")
+
+    def __getattr__(self, item):
+        return False
+
+
+circle = Circle(10.5, 7, 22)
+circle.radius = -10 # прежнее значение не должно меняться, т.к. отрицательный радиус недопустим
+x, y = circle.x, circle.y
+res = circle.name # False, т.к. атрибут name не существует
+
+print(circle.radius)
 
 
 # Подвиг 9. Объявите в программе класс Dimensions (габариты) с атрибутами:
@@ -561,53 +561,53 @@
 # P.S. В программе нужно объявить только класс Dimensions. На экран ничего выводить не нужно.
 
 
-# class Dimensions:
-#     MIN_DIMENSION = 10
-#     MAX_DIMENSION = 1000
-#
-#     def __init__(self, a, b, c):
-#         self.__a = self.__b = self.__c = None
-#         self.a = a
-#         self.b = b
-#         self.c = c
-#
-#     @property
-#     def a(self):
-#         return self.__a
-#
-#     @a.setter
-#     def a(self, value):
-#         self.__a = value
-#
-#     @property
-#     def b(self):
-#         return self.__b
-#
-#     @b.setter
-#     def b(self, value):
-#         self.__b = value
-#
-#     @property
-#     def c(self):
-#         return self.__c
-#
-#     @c.setter
-#     def c(self, value):
-#         self.__c = value
-#
-#     def __setattr__(self, key, value):
-#         if type(value) in (int, float) and self.MIN_DIMENSION <= value <= self.MAX_DIMENSION:
-#             super().__setattr__(key, value)
-#         if key in ('MIN_DIMENSION', 'MAX_DIMENSION'):
-#             raise AttributeError("Менять атрибуты MIN_DIMENSION и MAX_DIMENSION запрещено.")
-#
-#
-# d = Dimensions(10.5, 20.1, 30)
-# d.a = 8
-# d.b = 15
-# a, b, c = d.a, d.b, d.c  # a=10.5, b=15, c=30
-# d.MAX_DIMENSION = 10  # исключение AttributeError
-# print(d.__dict__)
+class Dimensions:
+    MIN_DIMENSION = 10
+    MAX_DIMENSION = 1000
+
+    def __init__(self, a, b, c):
+        self.__a = self.__b = self.__c = None
+        self.a = a
+        self.b = b
+        self.c = c
+
+    @property
+    def a(self):
+        return self.__a
+
+    @a.setter
+    def a(self, value):
+        self.__a = value
+
+    @property
+    def b(self):
+        return self.__b
+
+    @b.setter
+    def b(self, value):
+        self.__b = value
+
+    @property
+    def c(self):
+        return self.__c
+
+    @c.setter
+    def c(self, value):
+        self.__c = value
+
+    def __setattr__(self, key, value):
+        if type(value) in (int, float) and self.MIN_DIMENSION <= value <= self.MAX_DIMENSION:
+            super().__setattr__(key, value)
+        if key in ('MIN_DIMENSION', 'MAX_DIMENSION'):
+            raise AttributeError("Менять атрибуты MIN_DIMENSION и MAX_DIMENSION запрещено.")
+
+
+d = Dimensions(10.5, 20.1, 30)
+d.a = 8
+d.b = 15
+a, b, c = d.a, d.b, d.c  # a=10.5, b=15, c=30
+d.MAX_DIMENSION = 10  # исключение AttributeError
+print(d.__dict__)
 
 
 # Подвиг 10. Объявите класс GeyserClassic - фильтр для очистки воды. В этом классе должно быть три слота для фильтров.
@@ -671,70 +671,70 @@
 # my_water.add_filter(2, Calcium(time.time())) # добавление в "чужой" слот также невозможно
 # P.S. На экран ничего выводить не нужно.
 
-# import time
-#
-#
-# class GeyserClassic:
-#     MAX_DATE_FILTER = 100
-#     filters = ('Mechanical', 'Aragon', 'Calcium')
-#
-#     def __init__(self):
-#         self.slots = {(1, self.filters[0]): None, (2, self.filters[1]): None, (3, self.filters[2]): None}
-#
-#     def add_filter(self, slot_num, filter):
-#         t = (slot_num, filter.__class__.__name__)
-#         if t in self.slots and not self.slots[t]:
-#             self.slots[t] = filter
-#
-#     def remove_filter(self, slot_num):
-#         if type(slot_num) is int and 1 <= slot_num <= 3:
-#             key = (slot_num, self.filters[slot_num-1])
-#             if key in self.slots:
-#                 self.slots[key] = None
-#
-#     def get_filters(self):
-#         return self.slots.values()
-#
-#     def water_on(self):
-#         end = time.time()
-#         for i in self.slots.values():
-#             if i is None:
-#                 return False
-#             start = i.date
-#             if end - start > self.MAX_DATE_FILTER:
-#                 return False
-#         return True
-#
-#
-# class Filter:
-#     def __init__(self, date):
-#         self.date = date
-#
-#     def __setattr__(self, key, value):
-#         if key == 'date' and key in self.__dict__:
-#             return
-#         object.__setattr__(self, key, value)
-#
-#
-# class Mechanical(Filter):
-#     pass
-#
-#
-# class Aragon(Filter):
-#     pass
-#
-#
-# class Calcium(Filter):
-#     pass
-#
-#
-# my_water = GeyserClassic()
-# my_water.add_filter(1, Mechanical(time.time()))
-# my_water.add_filter(2, Aragon(time.time()))
-# w = my_water.water_on()  # False
-# my_water.add_filter(3, Calcium(time.time()))
-# w = my_water.water_on()  # True
-# f1, f2, f3 = my_water.get_filters()  # f1, f2, f3 - ссылки на соответствующие объекты классов фильтров
-# my_water.add_filter(3, Calcium(time.time()))  # повторное добавление в занятый слот невозможно
-# my_water.add_filter(2, Calcium(time.time()))  # добавление в "чужой" слот также невозможно
-# # P.S. На экран ничего выводить не нужно.
+import time
+
+
+class GeyserClassic:
+    MAX_DATE_FILTER = 100
+    filters = ('Mechanical', 'Aragon', 'Calcium')
+
+    def __init__(self):
+        self.slots = {(1, self.filters[0]): None, (2, self.filters[1]): None, (3, self.filters[2]): None}
+
+    def add_filter(self, slot_num, filter):
+        t = (slot_num, filter.__class__.__name__)
+        if t in self.slots and not self.slots[t]:
+            self.slots[t] = filter
+
+    def remove_filter(self, slot_num):
+        if type(slot_num) is int and 1 <= slot_num <= 3:
+            key = (slot_num, self.filters[slot_num-1])
+            if key in self.slots:
+                self.slots[key] = None
+
+    def get_filters(self):
+        return self.slots.values()
+
+    def water_on(self):
+        end = time.time()
+        for i in self.slots.values():
+            if i is None:
+                return False
+            start = i.date
+            if end - start > self.MAX_DATE_FILTER:
+                return False
+        return True
+
+
+class Filter:
+    def __init__(self, date):
+        self.date = date
+
+    def __setattr__(self, key, value):
+        if key == 'date' and key in self.__dict__:
+            return
+        object.__setattr__(self, key, value)
+
+
+class Mechanical(Filter):
+    pass
+
+
+class Aragon(Filter):
+    pass
+
+
+class Calcium(Filter):
+    pass
+
+
+my_water = GeyserClassic()
+my_water.add_filter(1, Mechanical(time.time()))
+my_water.add_filter(2, Aragon(time.time()))
+w = my_water.water_on()  # False
+my_water.add_filter(3, Calcium(time.time()))
+w = my_water.water_on()  # True
+f1, f2, f3 = my_water.get_filters()  # f1, f2, f3 - ссылки на соответствующие объекты классов фильтров
+my_water.add_filter(3, Calcium(time.time()))  # повторное добавление в занятый слот невозможно
+my_water.add_filter(2, Calcium(time.time()))  # добавление в "чужой" слот также невозможно
+# P.S. На экран ничего выводить не нужно.
