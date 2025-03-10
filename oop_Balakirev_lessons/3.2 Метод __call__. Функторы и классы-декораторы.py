@@ -27,45 +27,45 @@
 # # здесь объявляйте класс RandomPassword
 #
 #
-# class RandomPassword:
-#     def __init__(self, psw_chars, min_length, max_length):
-#         self.psw_chars = psw_chars
-#         self.min_length = min_length
-#         self.max_length = max_length
-#
-#     def __call__(self, *args, **kwargs):
-#         pass_len = randint(self.min_length, self.max_length)
-#         return "".join([self.psw_chars[randint(0, len(self.psw_chars)-1)] for x in range(pass_len)])
-#
-#
-# min_length = 5
-# max_length = 20
-# psw_chars = "qwertyuiopasdfghjklzxcvbnm0123456789!@#$%&*"
-# rnd = RandomPassword(psw_chars, min_length, max_length)
-# lst_pass = [rnd() for _ in range(3)]
-# print(lst_pass)
+class RandomPassword:
+    def __init__(self, psw_chars, min_length, max_length):
+        self.psw_chars = psw_chars
+        self.min_length = min_length
+        self.max_length = max_length
+
+    def __call__(self, *args, **kwargs):
+        pass_len = randint(self.min_length, self.max_length)
+        return "".join([self.psw_chars[randint(0, len(self.psw_chars)-1)] for x in range(pass_len)])
 
 
-# с использованием замыканий ф-ций
-# from random import randint
-#
-#
-# class RandomPassword:
-#     def __init__(self, min_length, max_length):
-#         self.min_length = min_length
-#         self.max_length = max_length
-#
-#     def __call__(self, *args, **kwargs):
-#         if not isinstance(args[0], str):
-#             raise TypeError('Аргумент должен быть строкой')
-#         pass_len = randint(self.min_length, self.max_length)
-#         return "".join([args[0][randint(0, len(args[0])-1)] for _ in range(pass_len)])
-#
-#
-# min_length = 5
-# max_length = 20
-# rnd = RandomPassword(min_length, max_length)
-# print([rnd("qwertyuiopasdfghjklzxcvbnm0123456789!@#$%&*") for _ in range(3)])
+min_length = 5
+max_length = 20
+psw_chars = "qwertyuiopasdfghjklzxcvbnm0123456789!@#$%&*"
+rnd = RandomPassword(psw_chars, min_length, max_length)
+lst_pass = [rnd() for _ in range(3)]
+print(lst_pass)
+
+
+с использованием замыканий ф-ций
+from random import randint
+
+
+class RandomPassword:
+    def __init__(self, min_length, max_length):
+        self.min_length = min_length
+        self.max_length = max_length
+
+    def __call__(self, *args, **kwargs):
+        if not isinstance(args[0], str):
+            raise TypeError('Аргумент должен быть строкой')
+        pass_len = randint(self.min_length, self.max_length)
+        return "".join([args[0][randint(0, len(args[0])-1)] for _ in range(pass_len)])
+
+
+min_length = 5
+max_length = 20
+rnd = RandomPassword(min_length, max_length)
+print([rnd("qwertyuiopasdfghjklzxcvbnm0123456789!@#$%&*") for _ in range(3)])
 
 
 # Подвиг 3. Для последовательной обработки файлов из некоторого списка, например:
@@ -91,17 +91,17 @@
 # P.S. Ваша задача только объявить класс ImageFileAcceptor. На экран ничего выводить не нужно.
 
 
-# class ImageFileAcceptor:
-#     def __init__(self, extensions):
-#         self.extensions = extensions
-#
-#     def __call__(self, *args, **kwargs):
-#         return args[0].split('.')[-1] in self.extensions
-#
-# filenames = ["boat.jpg", "web.png", "text.txt", "python.doc", "ava.jpg", "forest.jpeg", "eq_1.png", "eq_2.png"]
-# acceptor = ImageFileAcceptor(('jpg', 'bmp', 'jpeg'))
-# image_filenames = filter(acceptor, filenames)
-# print(list(image_filenames))  # ["boat.jpg", "ava.jpg", "forest.jpeg"]
+class ImageFileAcceptor:
+    def __init__(self, extensions):
+        self.extensions = extensions
+
+    def __call__(self, *args, **kwargs):
+        return args[0].split('.')[-1] in self.extensions
+
+filenames = ["boat.jpg", "web.png", "text.txt", "python.doc", "ava.jpg", "forest.jpeg", "eq_1.png", "eq_2.png"]
+acceptor = ImageFileAcceptor(('jpg', 'bmp', 'jpeg'))
+image_filenames = filter(acceptor, filenames)
+print(list(image_filenames))  # ["boat.jpg", "ava.jpg", "forest.jpeg"]
 
 
 # Подвиг 4. Предположим, мы разрабатываем класс для обработки формы авторизации на стороне сервера.
@@ -159,47 +159,47 @@
 #
 # P.S. В программе следует только объявить два класса валидаторов, на экран выводить ничего не нужно.
 
-# from string import ascii_lowercase, digits
-#
-# class LoginForm:
-#     def __init__(self, name, validators=None):
-#         self.name = name
-#         self.validators = validators
-#         self.login = ""
-#         self.password = ""
-#
-#     def post(self, request):
-#         self.login = request.get('login', "")
-#         self.password = request.get('password', "")
-#
-#     def is_validate(self):
-#         if not self.validators:
-#             return True
-#
-#         for v in self.validators:
-#             if not v(self.login) or not v(self.password):
-#                 return False
-#
-#         return True
-#
-#
-# class LengthValidator:
-#     def __init__(self, min_length, max_length):
-#         self.min_length = min_length
-#         self.max_length = max_length
-#
-#     def __call__(self, *args, **kwargs):
-#         return self.min_length <= len(args[0]) <= self.max_length
-#
-#
-# class CharsValidator:
-#     def __init__(self, chars):
-#         self.chars = chars
-#
-#     def __call__(self, *args, **kwargs):
-#         if isinstance(args[0], str):
-#             res = list(filter(lambda x: x in self.chars, args[0]))
-#             return len(res) == len(args[0])
+from string import ascii_lowercase, digits
+
+class LoginForm:
+    def __init__(self, name, validators=None):
+        self.name = name
+        self.validators = validators
+        self.login = ""
+        self.password = ""
+
+    def post(self, request):
+        self.login = request.get('login', "")
+        self.password = request.get('password', "")
+
+    def is_validate(self):
+        if not self.validators:
+            return True
+
+        for v in self.validators:
+            if not v(self.login) or not v(self.password):
+                return False
+
+        return True
+
+
+class LengthValidator:
+    def __init__(self, min_length, max_length):
+        self.min_length = min_length
+        self.max_length = max_length
+
+    def __call__(self, *args, **kwargs):
+        return self.min_length <= len(args[0]) <= self.max_length
+
+
+class CharsValidator:
+    def __init__(self, chars):
+        self.chars = chars
+
+    def __call__(self, *args, **kwargs):
+        if isinstance(args[0], str):
+            res = list(filter(lambda x: x in self.chars, args[0]))
+            return len(res) == len(args[0])
 
 
 # Подвиг 5. Объявите класс DigitRetrieve для преобразования данных из строки в числа.
@@ -222,16 +222,16 @@
 # P.S. На экран ничего выводить не нужно.
 
 
-# class DigitRetrieve:
-#     def __call__(self, value: str, *args, **kwargs):
-#         if value[0] == '-' and value[1:].isdigit() or value.isdigit():
-#             return int(value)
-#
-#
-# dg = DigitRetrieve()
-# st = ["123", "abc", "-56.4", "0", "-5"]
-# digits = list(map(dg, st))  # [123, None, None, 0, -5]
-# print(digits)
+class DigitRetrieve:
+    def __call__(self, value: str, *args, **kwargs):
+        if value[0] == '-' and value[1:].isdigit() or value.isdigit():
+            return int(value)
+
+
+dg = DigitRetrieve()
+st = ["123", "abc", "-56.4", "0", "-5"]
+digits = list(map(dg, st))  # [123, None, None, 0, -5]
+print(digits)
 
 
 # Подвиг 6. Предположим, вам необходимо создать программу по преобразованию списка строк, например:
@@ -262,18 +262,18 @@
 # P.S. На экран ничего выводить не нужно.
 
 
-# class RenderList:
-#     def __init__(self, type_list):
-#         self.type_list = type_list if type_list in ('ul', 'ol') else 'ul'
-#
-#     def __call__(self, lst, *args, **kwargs):
-#         return "".join([f"<{self.type_list}>\n", *map(lambda x: f"<li>{x}</li>\n", lst), f"</{self.type_list}>"])
-#
-#
-# lst = ["Пункт меню 1", "Пункт меню 2", "Пункт меню 3"]
-# render = RenderList("ol")
-# html = render(lst)
-# print(html)
+class RenderList:
+    def __init__(self, type_list):
+        self.type_list = type_list if type_list in ('ul', 'ol') else 'ul'
+
+    def __call__(self, lst, *args, **kwargs):
+        return "".join([f"<{self.type_list}>\n", *map(lambda x: f"<li>{x}</li>\n", lst), f"</{self.type_list}>"])
+
+
+lst = ["Пункт меню 1", "Пункт меню 2", "Пункт меню 3"]
+render = RenderList("ol")
+html = render(lst)
+print(html)
 
 
 # Подвиг 7. Необходимо объявить класс-декоратор с именем HandlerGET, который будет имитировать обработку
@@ -313,26 +313,26 @@
 # P.S. В программе достаточно объявить только класс. Ничего на экран выводить не нужно.
 
 
-# class HandlerGET:
-#     def __init__(self, func):
-#         self.func = func
-#
-#     def __call__(self, request: dict, *args, **kwargs):
-#         res = request.get('method', 'GET')
-#         return self.get(self.func, res)
-#
-#     def get(self, func, request, *args, **kwargs):
-#         if request == 'GET':
-#             return f"{request}: {func(request)}"
-#
-#
-# @HandlerGET
-# def contact(request):
-#     return "Сергей Балакирев"
-#
-#
-# res = contact({"method": "GET", "url": "contact.html"})
-# print(res)
+class HandlerGET:
+    def __init__(self, func):
+        self.func = func
+
+    def __call__(self, request: dict, *args, **kwargs):
+        res = request.get('method', 'GET')
+        return self.get(self.func, res)
+
+    def get(self, func, request, *args, **kwargs):
+        if request == 'GET':
+            return f"{request}: {func(request)}"
+
+
+@HandlerGET
+def contact(request):
+    return "Сергей Балакирев"
+
+
+res = contact({"method": "GET", "url": "contact.html"})
+print(res)
 
 
 # Подвиг 8 (развитие подвига 7). Необходимо объявить класс-декоратор с именем Handler, который можно было бы
@@ -384,33 +384,33 @@
 # Реализация:
 
 
-# class Handler:
-#     def __init__(self, methods=('GET',)):
-#         self.methods = methods
-#
-#     def __call__(self, func, *args, **kwargs):
-#         def wrapper(request: dict, *args, **kwargs):
-#             res = request.get("method", 'GET')
-#             if res in self.methods:
-#                 method = res.lower()
-#                 return self.__getattribute__(method)(func, res)
-#
-#         return wrapper
-#
-#     def get(self, func, method):
-#         return f"{method}: {func(method)}"
-#
-#     def post(self, func, method):
-#         return f"{method}: {func(method)}"
-#
-#
-# @Handler(methods=('GET', 'POST'))  # по умолчанию methods = ('GET',)
-# def contact(request):
-#     return "Сергей Балакирев"
-#
-#
-# res = contact({"method": "POST", "url": "contact.html"})
-# print(res)
+class Handler:
+    def __init__(self, methods=('GET',)):
+        self.methods = methods
+
+    def __call__(self, func, *args, **kwargs):
+        def wrapper(request: dict, *args, **kwargs):
+            res = request.get("method", 'GET')
+            if res in self.methods:
+                method = res.lower()
+                return self.__getattribute__(method)(func, res)
+
+        return wrapper
+
+    def get(self, func, method):
+        return f"{method}: {func(method)}"
+
+    def post(self, func, method):
+        return f"{method}: {func(method)}"
+
+
+@Handler(methods=('GET', 'POST'))  # по умолчанию methods = ('GET',)
+def contact(request):
+    return "Сергей Балакирев"
+
+
+res = contact({"method": "POST", "url": "contact.html"})
+print(res)
 
 
 # Подвиг 9. Объявите класс-декоратор InputDigits для декорирования стандартной функции input так,
@@ -428,17 +428,17 @@
 # P.S. На экран ничего выводить не нужно.
 
 
-# class InputDigits:
-#     def __init__(self, func):
-#         self.func = func
-#
-#     def __call__(self, *args, **kwargs):
-#         return list(map(int, self.func().split()))
-#
-#
-# input_dg = InputDigits(input)
-# res = input_dg()
-# print(res)
+class InputDigits:
+    def __init__(self, func):
+        self.func = func
+
+    def __call__(self, *args, **kwargs):
+        return list(map(int, self.func().split()))
+
+
+input_dg = InputDigits(input)
+res = input_dg()
+print(res)
 
 
 # Подвиг 10 (развитие подвига 9). Объявите класс-декоратор InputValues с параметром render - функция
@@ -482,32 +482,32 @@
 # res = input_dg()
 # Выведите результат res на экран.
 
-# class RenderDigit:
-#     def __call__(self, string: str, *args, **kwargs):
-#         if string.isdigit():
-#             return int(string)
-#         else:
-#             return None
-#
-#
-# class InputValues:
-#     def __init__(self, render):
-#         self.render = render
-#
-#     def __call__(self, func, *args, **kwargs):
-#         def wrapper(*args, **kwargs):
-#             return list(map(self.render, func(*args, **kwargs).split()))
-#
-#         return wrapper
-#
-#
-# render = RenderDigit()
-# d1 = render("123")  # 123 (целое число)
-# d2 = render("45.54")  # None (не целое число)
-# d3 = render("-56")  # -56 (целое число)
-# d4 = render("12fg")  # None (не целое число)
-# d5 = render("abc")  # None (не целое число)
-#
-# input_dg = InputValues(render)(input)
-# res = input_dg()
-# print(res)
+class RenderDigit:
+    def __call__(self, string: str, *args, **kwargs):
+        if string.isdigit():
+            return int(string)
+        else:
+            return None
+
+
+class InputValues:
+    def __init__(self, render):
+        self.render = render
+
+    def __call__(self, func, *args, **kwargs):
+        def wrapper(*args, **kwargs):
+            return list(map(self.render, func(*args, **kwargs).split()))
+
+        return wrapper
+
+
+render = RenderDigit()
+d1 = render("123")  # 123 (целое число)
+d2 = render("45.54")  # None (не целое число)
+d3 = render("-56")  # -56 (целое число)
+d4 = render("12fg")  # None (не целое число)
+d5 = render("abc")  # None (не целое число)
+
+input_dg = InputValues(render)(input)
+res = input_dg()
+print(res)
