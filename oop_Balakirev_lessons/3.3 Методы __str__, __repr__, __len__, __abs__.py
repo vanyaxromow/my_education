@@ -21,22 +21,22 @@
 # в консоль.
 
 
-# import sys
-#
-#
-# class Book:
-#     def __init__(self, title, author, pages):
-#         self.title = title
-#         self.author = author
-#         self.pages = pages
-#
-#     def __str__(self):
-#         return f"Книга: {self.title}; {self.author}; {self.pages}"
-#
-#
-# lst_in = list(map(str.strip, sys.stdin.readlines()))  # считывание списка из входного потока (эту строчку не менять)
-# book = Book(*lst_in)
-# print(book)
+import sys
+
+
+class Book:
+    def __init__(self, title, author, pages):
+        self.title = title
+        self.author = author
+        self.pages = pages
+
+    def __str__(self):
+        return f"Книга: {self.title}; {self.author}; {self.pages}"
+
+
+lst_in = list(map(str.strip, sys.stdin.readlines()))  # считывание списка из входного потока (эту строчку не менять)
+book = Book(*lst_in)
+print(book)
 
 
 # Подвиг 3. Объявите класс с именем Model, объекты которого создаются командой:
@@ -68,22 +68,22 @@
 # P.S. В программе нужно только объявить класс, выводить в консоль ничего не нужно.
 
 
-# class Model:
-#     def __init__(self):
-#         self.__params = {}
-#
-#     def query(self, **kwargs):
-#         self.__params = kwargs
-#
-#     def __str__(self):
-#         if self.__params:
-#             return f"Model: {', '.join(list(map(lambda x: f'{x} = {self.__params[x]}', self.__params)))}"
-#         return 'Model'
-#
-#
-# model = Model()
-# model.query(id=1, fio='Sergey', old=33)
-# print(model)
+class Model:
+    def __init__(self):
+        self.__params = {}
+
+    def query(self, **kwargs):
+        self.__params = kwargs
+
+    def __str__(self):
+        if self.__params:
+            return f"Model: {', '.join(list(map(lambda x: f'{x} = {self.__params[x]}', self.__params)))}"
+        return 'Model'
+
+
+model = Model()
+model.query(id=1, fio='Sergey', old=33)
+print(model)
 
 
 # Подвиг 4. Объявите класс WordString, объекты которого создаются командами:
@@ -113,34 +113,34 @@
 # P.S. В программе нужно только объявить класс, выводить в консоль ничего не нужно.
 
 
-# class WordString:
-#     def __init__(self, string=None):
-#         self.strings = string
-#
-#     def __len__(self):
-#         return len(self.strings.split())
-#
-#     def words(self, indx):
-#         return self.strings.split()[indx]
-#
-#     @property
-#     def string(self):
-#         return self.strings
-#
-#     @string.setter
-#     def string(self, value):
-#         self.strings = value
-#
-#     def __call__(self, indx, *args, **kwargs):
-#         return self.words(indx)
-#
-#
-# words = WordString()
-# words.string = "Курс по Python ООП"
-# n = len(words)
-# first = "" if n == 0 else words(0)
-# print(words.string)
-# print(f"Число слов: {n}; первое слово: {first}")
+class WordString:
+    def __init__(self, string=None):
+        self.strings = string
+
+    def __len__(self):
+        return len(self.strings.split())
+
+    def words(self, indx):
+        return self.strings.split()[indx]
+
+    @property
+    def string(self):
+        return self.strings
+
+    @string.setter
+    def string(self, value):
+        self.strings = value
+
+    def __call__(self, indx, *args, **kwargs):
+        return self.words(indx)
+
+
+words = WordString()
+words.string = "Курс по Python ООП"
+n = len(words)
+first = "" if n == 0 else words(0)
+print(words.string)
+print(f"Число слов: {n}; первое слово: {first}")
 
 
 # Подвиг 5. Объявите класс LinkedList (связный список) для работы со следующей структурой данных:
@@ -190,122 +190,122 @@
 # P.S. На экран в программе ничего выводить не нужно.
 
 
-# class Descriptor:
-#     def __set_name__(self, owner, name):
-#         self.name = f"_{owner.__name__}__{name}"
+class Descriptor:
+    def __set_name__(self, owner, name):
+        self.name = f"_{owner.__name__}__{name}"
+
+    def __get__(self, instance, owner):
+        return getattr(instance, self.name)
+
+    def __set__(self, instance, value):
+        setattr(instance, self.name, value)
+
+
+class ObjList:
+    data = Descriptor()
+    prev = Descriptor()
+    next = Descriptor()
+
+    def __init__(self, data):
+        self.data = data
+        self.prev = None
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def add_obj(self, obj):
+        if self.tail:
+            ptr = obj
+            self.tail.next = ptr
+            ptr.prev = self.tail
+            self.tail = ptr
+
+        else:
+            self.head = self.tail = obj
+
+    def remove_obj(self, indx):
+        ptr = self.head
+        number = 0
+        while ptr:
+            if indx != number:
+                number += 1
+                ptr = ptr.next
+            elif indx == number:
+                if ptr is self.head:
+                    if not self.head.next:
+                        self.head = None
+                        self.tail = None
+                        break
+                    ptr = self.head.next
+                    ptr.prev = None
+                    self.head = ptr
+                    break
+
+                elif ptr is self.tail:
+                    ptr = self.tail.prev
+                    ptr.next = None
+                    self.tail = ptr
+                    break
+
+            else:
+                left = ptr.prev
+                right = ptr.next
+                left.next = right
+                right.prev = left
+                break
+
+    def __len__(self):
+        ptr = self.head
+        amount = 1
+        while ptr.next:
+            ptr = ptr.next
+            amount += 1
+
+        return amount if ptr else 0
+
+    def __call__(self, indx, *args, **kwargs):
+        ptr = self.head
+        number = 0
+        while ptr:
+            if number == indx:
+                return ptr.data
+            ptr = ptr.next
+            number += 1
+
+
+ln = LinkedList()
+ln.add_obj(ObjList("Сергей"))
+ln.add_obj(ObjList("Балакирев"))
+ln.add_obj(ObjList("Python ООП"))
+ln.remove_obj(2)
+assert len(
+    ln) == 2, "функция len вернула неверное число объектов в списке, возможно, неверно работает метод remove_obj()"
+ln.add_obj(ObjList("Python"))
+assert ln(2) == "Python", "неверное значение атрибута __data, взятое по индексу"
+assert len(ln) == 3, "функция len вернула неверное число объектов в списке"
+assert ln(1) == "Балакирев", "неверное значение атрибута __data, взятое по индексу"
 #
-#     def __get__(self, instance, owner):
-#         return getattr(instance, self.name)
-#
-#     def __set__(self, instance, value):
-#         setattr(instance, self.name, value)
-#
-#
-# class ObjList:
-#     data = Descriptor()
-#     prev = Descriptor()
-#     next = Descriptor()
-#
-#     def __init__(self, data):
-#         self.data = data
-#         self.prev = None
-#         self.next = None
-#
-#
-# class LinkedList:
-#     def __init__(self):
-#         self.head = None
-#         self.tail = None
-#
-#     def add_obj(self, obj):
-#         if self.tail:
-#             ptr = obj
-#             self.tail.next = ptr
-#             ptr.prev = self.tail
-#             self.tail = ptr
-#
-#         else:
-#             self.head = self.tail = obj
-#
-#     def remove_obj(self, indx):
-#         ptr = self.head
-#         number = 0
-#         while ptr:
-#             if indx != number:
-#                 number += 1
-#                 ptr = ptr.next
-#             elif indx == number:
-#                 if ptr is self.head:
-#                     if not self.head.next:
-#                         self.head = None
-#                         self.tail = None
-#                         break
-#                     ptr = self.head.next
-#                     ptr.prev = None
-#                     self.head = ptr
-#                     break
-#
-#                 elif ptr is self.tail:
-#                     ptr = self.tail.prev
-#                     ptr.next = None
-#                     self.tail = ptr
-#                     break
-#
-#             else:
-#                 left = ptr.prev
-#                 right = ptr.next
-#                 left.next = right
-#                 right.prev = left
-#                 break
-#
-#     def __len__(self):
-#         ptr = self.head
-#         amount = 1
-#         while ptr.next:
-#             ptr = ptr.next
-#             amount += 1
-#
-#         return amount if ptr else 0
-#
-#     def __call__(self, indx, *args, **kwargs):
-#         ptr = self.head
-#         number = 0
-#         while ptr:
-#             if number == indx:
-#                 return ptr.data
-#             ptr = ptr.next
-#             number += 1
-#
-#
-# ln = LinkedList()
-# ln.add_obj(ObjList("Сергей"))
-# ln.add_obj(ObjList("Балакирев"))
-# ln.add_obj(ObjList("Python ООП"))
-# ln.remove_obj(2)
-# assert len(
-#     ln) == 2, "функция len вернула неверное число объектов в списке, возможно, неверно работает метод remove_obj()"
-# ln.add_obj(ObjList("Python"))
-# assert ln(2) == "Python", "неверное значение атрибута __data, взятое по индексу"
-# assert len(ln) == 3, "функция len вернула неверное число объектов в списке"
-# assert ln(1) == "Балакирев", "неверное значение атрибута __data, взятое по индексу"
-# #
-# n = 0
-# h = ln.head
-# while h:
-#     assert isinstance(h, ObjList)
-#     h = h._ObjList__next
-#     n += 1
-#
-# assert n == 3, "при перемещении по списку через __next не все объекты перебрались"
-#
-# n = 0
-# h = ln.tail
-# while h:
-#     assert isinstance(h, ObjList)
-#     h = h._ObjList__prev
-#     n += 1
-#
-# assert n == 3, "при перемещении по списку через __prev не все объекты перебрались"
+n = 0
+h = ln.head
+while h:
+    assert isinstance(h, ObjList)
+    h = h._ObjList__next
+    n += 1
+
+assert n == 3, "при перемещении по списку через __next не все объекты перебрались"
+
+n = 0
+h = ln.tail
+while h:
+    assert isinstance(h, ObjList)
+    h = h._ObjList__prev
+    n += 1
+
+assert n == 3, "при перемещении по списку через __prev не все объекты перебрались"
 
 
 # Подвиг 6. Объявите класс с именем Complex для представления и работы с комплексными числами.
@@ -337,46 +337,46 @@
 # P.S. На экран ничего выводить не нужно.
 
 
-# from math import sqrt
-#
-#
-# class Complex:
-#     def __init__(self, real, img):
-#         self.real = real
-#         self.img = img
-#
-#     @classmethod
-#     def verify_value(cls, value):
-#         if type(value) not in (int, float):
-#             raise ValueError("Неверный тип данных.")
-#
-#     @property
-#     def real(self):
-#         return self.__real
-#
-#     @real.setter
-#     def real(self, value):
-#         self.verify_value(value)
-#         self.__real = value
-#
-#     @property
-#     def img(self):
-#         return self.__img
-#
-#     @img.setter
-#     def img(self, value):
-#         self.verify_value(value)
-#         self.__img = value
-#
-#     def __abs__(self):
-#         return abs(sqrt(self.real*self.real + self.img*self.img))
-#
-#
-# cmp = Complex(7, 8)
-# cmp.real = 3
-# cmp.img = 4
-# c_abs = abs(cmp)
-# print(c_abs)
+from math import sqrt
+
+
+class Complex:
+    def __init__(self, real, img):
+        self.real = real
+        self.img = img
+
+    @classmethod
+    def verify_value(cls, value):
+        if type(value) not in (int, float):
+            raise ValueError("Неверный тип данных.")
+
+    @property
+    def real(self):
+        return self.__real
+
+    @real.setter
+    def real(self, value):
+        self.verify_value(value)
+        self.__real = value
+
+    @property
+    def img(self):
+        return self.__img
+
+    @img.setter
+    def img(self, value):
+        self.verify_value(value)
+        self.__img = value
+
+    def __abs__(self):
+        return abs(sqrt(self.real*self.real + self.img*self.img))
+
+
+cmp = Complex(7, 8)
+cmp.real = 3
+cmp.img = 4
+c_abs = abs(cmp)
+print(c_abs)
 
 
 # Подвиг 7. Объявите класс с именем RadiusVector для описания и работы с n-мерным вектором (у которого n координат).
@@ -414,40 +414,40 @@
 # P.S. На экран ничего выводить не нужно, только объявить класс RadiusVector.
 
 
-# class RadiusVector:
-#     def __init__(self, *args):
-#         self.coords = None
-#         if len(args) == 1 and type(args[0]) is int and args[0] > 1:
-#             self.coords = [0 for _ in range(args[0])]
-#         elif len(args) > 1:
-#             self.coords = [x for x in args]
-#
-#     def set_coords(self, *args):
-#         s = min(len(self.coords), len(args))
-#         for i in range(s):
-#             self.coords[i] = args[i]
-#
-#         return self.coords
-#
-#     def get_coords(self):
-#         return tuple(self.coords)
-#
-#     def __len__(self):
-#         return len(self.coords)
-#
-#     def __abs__(self):
-#         res = sum([x*x for x in self.coords])**0.5
-#         return res
-#
-#
-# vector3D = RadiusVector(3)
-# vector3D.set_coords(3, -5.6, 8)
-# a, b, c = vector3D.get_coords()
-# vector3D.set_coords(3, -5.6, 8, 10, 11) # ошибки быть не должно, последние две координаты игнорируются
-# vector3D.set_coords(1, 2) # ошибки быть не должно, меняются только первые две координаты
-# res_len = len(vector3D) # res_len = 3
-# res_abs = abs(vector3D)
-# print(vector3D.get_coords())
+class RadiusVector:
+    def __init__(self, *args):
+        self.coords = None
+        if len(args) == 1 and type(args[0]) is int and args[0] > 1:
+            self.coords = [0 for _ in range(args[0])]
+        elif len(args) > 1:
+            self.coords = [x for x in args]
+
+    def set_coords(self, *args):
+        s = min(len(self.coords), len(args))
+        for i in range(s):
+            self.coords[i] = args[i]
+
+        return self.coords
+
+    def get_coords(self):
+        return tuple(self.coords)
+
+    def __len__(self):
+        return len(self.coords)
+
+    def __abs__(self):
+        res = sum([x*x for x in self.coords])**0.5
+        return res
+
+
+vector3D = RadiusVector(3)
+vector3D.set_coords(3, -5.6, 8)
+a, b, c = vector3D.get_coords()
+vector3D.set_coords(3, -5.6, 8, 10, 11) # ошибки быть не должно, последние две координаты игнорируются
+vector3D.set_coords(1, 2) # ошибки быть не должно, меняются только первые две координаты
+res_len = len(vector3D) # res_len = 3
+res_abs = abs(vector3D)
+print(vector3D.get_coords())
 
 
 # Подвиг 8. Объявите класс DeltaClock для вычисления разницы времен. Объекты этого класса должны создаваться
@@ -481,37 +481,37 @@
 # P.S. На экран ничего выводить не нужно, только объявить классы.
 
 
-# class DeltaClock:
-#     def __init__(self, obj_1, obj_2):
-#         self.obj_1 = obj_1
-#         self.obj_2 = obj_2
-#
-#     def __str__(self):
-#         diff = self.__len__()
-#         h = diff // 3600
-#         m = diff % 3600 // 60
-#         s = diff % 3600 % 60
-#         return f'{h:02}: {m:02}: {s:02}'
-#
-#     def __len__(self):
-#         res = self.obj_1.get_time() - self.obj_2.get_time()
-#         return res if res > 0 else 0
-#
-#
-# class Clock:
-#     def __init__(self, hours, minutes, seconds):
-#         self.hours = hours
-#         self.minutes = minutes
-#         self.seconds = seconds
-#
-#     def get_time(self):
-#         return self.hours * 3600 + self.minutes * 60 + self.seconds
-#
-#
-# dt = DeltaClock(Clock(2, 45, 0), Clock(1, 15, 0))
-# print(dt) # 01: 30: 00
-# len_dt = len(dt) # 5400
-# print(len_dt)
+class DeltaClock:
+    def __init__(self, obj_1, obj_2):
+        self.obj_1 = obj_1
+        self.obj_2 = obj_2
+
+    def __str__(self):
+        diff = self.__len__()
+        h = diff // 3600
+        m = diff % 3600 // 60
+        s = diff % 3600 % 60
+        return f'{h:02}: {m:02}: {s:02}'
+
+    def __len__(self):
+        res = self.obj_1.get_time() - self.obj_2.get_time()
+        return res if res > 0 else 0
+
+
+class Clock:
+    def __init__(self, hours, minutes, seconds):
+        self.hours = hours
+        self.minutes = minutes
+        self.seconds = seconds
+
+    def get_time(self):
+        return self.hours * 3600 + self.minutes * 60 + self.seconds
+
+
+dt = DeltaClock(Clock(2, 45, 0), Clock(1, 15, 0))
+print(dt) # 01: 30: 00
+len_dt = len(dt) # 5400
+print(len_dt)
 
 
 # Подвиг 9. Объявите класс Recipe для представления рецептов. Отдельные ингредиенты рецепта должны определяться
@@ -560,40 +560,40 @@
 # P.S. На экран ничего выводить не нужно, только объявить классы.
 
 
-# class Recipe:
-#     def __init__(self, *args):
-#         self.recipes = list(args)
-#
-#     def add_ingredient(self, ing):
-#         self.recipes.append(ing)
-#
-#     def remove_ingredient(self, ing):
-#         if ing in self.recipes:
-#             self.recipes.remove(ing)
-#
-#     def get_ingredients(self):
-#         return tuple(self.recipes)
-#
-#     def __len__(self):
-#         return len(self.recipes)
-#
-#
-# class Ingredient:
-#     def __init__(self, name, volume, measure):
-#         self.name = name
-#         self.volume = volume
-#         self.measure = measure
-#
-#     def __str__(self):
-#         return f'{self.name}: {self.volume}, {self.measure}'
+class Recipe:
+    def __init__(self, *args):
+        self.recipes = list(args)
+
+    def add_ingredient(self, ing):
+        self.recipes.append(ing)
+
+    def remove_ingredient(self, ing):
+        if ing in self.recipes:
+            self.recipes.remove(ing)
+
+    def get_ingredients(self):
+        return tuple(self.recipes)
+
+    def __len__(self):
+        return len(self.recipes)
 
 
-# recipe = Recipe()
-# recipe.add_ingredient(Ingredient("Соль", 1, "столовая ложка"))
-# recipe.add_ingredient(Ingredient("Мука", 1, "кг"))
-# recipe.add_ingredient(Ingredient("Мясо баранины", 10, "кг"))
-# ings = recipe.get_ingredients()
-# n = len(recipe) # n = 3
+class Ingredient:
+    def __init__(self, name, volume, measure):
+        self.name = name
+        self.volume = volume
+        self.measure = measure
+
+    def __str__(self):
+        return f'{self.name}: {self.volume}, {self.measure}'
+
+
+recipe = Recipe()
+recipe.add_ingredient(Ingredient("Соль", 1, "столовая ложка"))
+recipe.add_ingredient(Ingredient("Мука", 1, "кг"))
+recipe.add_ingredient(Ingredient("Мясо баранины", 10, "кг"))
+ings = recipe.get_ingredients()
+n = len(recipe) # n = 3
 
 
 # Подвиг 10 (на повторение). Объявите класс PolyLine (полилиния) для представления линии из последовательности
@@ -617,19 +617,19 @@
 # P.S. На экран ничего выводить не нужно, только объявить класс.
 
 
-# class PolyLine:
-#     def __init__(self, start_coord, *args):
-#         self.coords = [start_coord, *args]
-#
-#     def add_coord(self, x, y):
-#         self.coords.append((x, y))
-#
-#     def remove_coord(self, indx):
-#         del self.coords[indx]
-#
-#     def get_coords(self):
-#         return self.coords
-#
-#
-# poly = PolyLine((1, 2), (3, 5), (0, 10), (-1, 8))
-# print(poly.get_coords())
+class PolyLine:
+    def __init__(self, start_coord, *args):
+        self.coords = [start_coord, *args]
+
+    def add_coord(self, x, y):
+        self.coords.append((x, y))
+
+    def remove_coord(self, indx):
+        del self.coords[indx]
+
+    def get_coords(self):
+        return self.coords
+
+
+poly = PolyLine((1, 2), (3, 5), (0, 10), (-1, 8))
+print(poly.get_coords())
