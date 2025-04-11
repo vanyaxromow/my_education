@@ -32,48 +32,48 @@
 # P.S. В программе требуется только объявить класс. На экран ничего выводить не нужно.
 
 
-# class NewList:
-#     def __init__(self, lst=None):
-#         self._lst = lst[:] if lst and type(lst) == list else []
-#
-#     def get_list(self):
-#         return self._lst
-#
-#     def __sub__(self, other):
-#         if type(other) not in (list, NewList):
-#             raise ArithmeticError('Правый операнд должен быть list или NewList')
-#         other_list = other if type(other) == list else other.get_list()
-#         return NewList(self.__diff_list(self._lst, other_list))
-#
-#     def __rsub__(self, other):
-#         if type(other) != list:
-#             raise ArithmeticError('Правый операнд должен быть list')
-#         return NewList(self.__diff_list(other, self._lst))
-#
-#     @staticmethod
-#     def __diff_list(lst1, lst2):
-#         if len(lst2) == 0:
-#             return lst1
-#
-#         sub = lst2[:]
-#         return [x for x in lst1 if not NewList.__is_elem(x, sub)]
-#
-#     @staticmethod
-#     def __is_elem(x, sub):
-#         res = any(map(lambda xx: type(x) == type(xx) and x == xx, sub))
-#         if res:
-#             sub.remove(x)
-#         return res
-#
-#
-# lst1 = NewList([1, 2, -4, 6, 10, 11, 15, False, True])
-# lst2 = NewList([0, 1, 2, 3, True])
-# res_1 = lst1 - lst2 # NewList: [-4, 6, 10, 11, 15, False]
-# lst1 -= lst2 # NewList: [-4, 6, 10, 11, 15, False]
-# res_2 = lst2 - [0, True] # NewList: [1, 2, 3]
-# res_3 = [1, 2, 3, 4.5] - res_2 # NewList: [4.5]
-# a = NewList([2, 3])
-# res_4 = [1, 2, 2, 3] - a # NewList: [1, 2]
+class NewList:
+    def __init__(self, lst=None):
+        self._lst = lst[:] if lst and type(lst) == list else []
+
+    def get_list(self):
+        return self._lst
+
+    def __sub__(self, other):
+        if type(other) not in (list, NewList):
+            raise ArithmeticError('Правый операнд должен быть list или NewList')
+        other_list = other if type(other) == list else other.get_list()
+        return NewList(self.__diff_list(self._lst, other_list))
+
+    def __rsub__(self, other):
+        if type(other) != list:
+            raise ArithmeticError('Правый операнд должен быть list')
+        return NewList(self.__diff_list(other, self._lst))
+
+    @staticmethod
+    def __diff_list(lst1, lst2):
+        if len(lst2) == 0:
+            return lst1
+
+        sub = lst2[:]
+        return [x for x in lst1 if not NewList.__is_elem(x, sub)]
+
+    @staticmethod
+    def __is_elem(x, sub):
+        res = any(map(lambda xx: type(x) == type(xx) and x == xx, sub))
+        if res:
+            sub.remove(x)
+        return res
+
+
+lst1 = NewList([1, 2, -4, 6, 10, 11, 15, False, True])
+lst2 = NewList([0, 1, 2, 3, True])
+res_1 = lst1 - lst2 # NewList: [-4, 6, 10, 11, 15, False]
+lst1 -= lst2 # NewList: [-4, 6, 10, 11, 15, False]
+res_2 = lst2 - [0, True] # NewList: [1, 2, 3]
+res_3 = [1, 2, 3, 4.5] - res_2 # NewList: [4.5]
+a = NewList([2, 3])
+res_4 = [1, 2, 2, 3] - a # NewList: [1, 2]
 
 
 # Подвиг 5. Объявите класс с именем ListMath, объекты которого можно создавать командами:
@@ -111,71 +111,71 @@
 # P.S. В программе достаточно только объявить класс. На экран ничего выводить не нужно.
 
 
-# class ListMath:
-#     def __init__(self, lst=None):
-#         self.lst_math = [x for x in ListMath.__is_valid(lst)] if lst else []
-#
-#     @staticmethod
-#     def __is_valid(lst):
-#         res = [x for x in lst if type(x) in (int, float)]
-#         return res
-#
-#     @staticmethod
-#     def __is_verify(other):
-#         if type(other) not in (int, float):
-#             raise ArithmeticError('Операнд должен быть числом')
-#
-#     def __add__(self, other):
-#         self.__is_verify(other)
-#         return ListMath([x + other for x in self.lst_math])
-#
-#     def __radd__(self, other):
-#         self.__is_verify(other)
-#         return self.__add__(other)
-#
-#     def __iadd__(self, other):
-#         self.__is_verify(other)
-#         self.lst_math = [x + other for x in self.lst_math]
-#         return self
-#
-#     def __sub__(self, other):
-#         self.__is_verify(other)
-#         return ListMath([x - other for x in self.lst_math])
-#
-#     def __rsub__(self, other):
-#         self.__is_verify(other)
-#         return ListMath([other - x for x in self.lst_math])
-#
-#     def __isub__(self, other):
-#         self.__is_verify(other)
-#         self.lst_math = [x - other for x in self.lst_math]
-#         return self
-#
-#     def __mul__(self, other):
-#         self.__is_verify(other)
-#         return ListMath([x * other for x in self.lst_math])
-#
-#     def __rmul__(self, other):
-#         self.__is_verify(other)
-#         return ListMath([x * other for x in self.lst_math])
-#
-#     def __imul__(self, other):
-#         self.__is_verify(other)
-#         self.lst_math = [x * other for x in self.lst_math]
-#         return self
-#
-#     def __truediv__(self, other):
-#         self.__is_verify(other)
-#         return ListMath([x / other for x in self.lst_math])
-#
-#     def __rtruediv__(self, other):
-#         self.__is_verify(other)
-#         return self.__truediv__(other)
-#
-#     def __itruediv__(self, other):
-#         self.__is_verify(other)
-#         self._lst = [x / other for x in self.lst_math]
-#         return self
+class ListMath:
+    def __init__(self, lst=None):
+        self.lst_math = [x for x in ListMath.__is_valid(lst)] if lst else []
+
+    @staticmethod
+    def __is_valid(lst):
+        res = [x for x in lst if type(x) in (int, float)]
+        return res
+
+    @staticmethod
+    def __is_verify(other):
+        if type(other) not in (int, float):
+            raise ArithmeticError('Операнд должен быть числом')
+
+    def __add__(self, other):
+        self.__is_verify(other)
+        return ListMath([x + other for x in self.lst_math])
+
+    def __radd__(self, other):
+        self.__is_verify(other)
+        return self.__add__(other)
+
+    def __iadd__(self, other):
+        self.__is_verify(other)
+        self.lst_math = [x + other for x in self.lst_math]
+        return self
+
+    def __sub__(self, other):
+        self.__is_verify(other)
+        return ListMath([x - other for x in self.lst_math])
+
+    def __rsub__(self, other):
+        self.__is_verify(other)
+        return ListMath([other - x for x in self.lst_math])
+
+    def __isub__(self, other):
+        self.__is_verify(other)
+        self.lst_math = [x - other for x in self.lst_math]
+        return self
+
+    def __mul__(self, other):
+        self.__is_verify(other)
+        return ListMath([x * other for x in self.lst_math])
+
+    def __rmul__(self, other):
+        self.__is_verify(other)
+        return ListMath([x * other for x in self.lst_math])
+
+    def __imul__(self, other):
+        self.__is_verify(other)
+        self.lst_math = [x * other for x in self.lst_math]
+        return self
+
+    def __truediv__(self, other):
+        self.__is_verify(other)
+        return ListMath([x / other for x in self.lst_math])
+
+    def __rtruediv__(self, other):
+        self.__is_verify(other)
+        return self.__truediv__(other)
+
+    def __itruediv__(self, other):
+        self.__is_verify(other)
+        self._lst = [x / other for x in self.lst_math]
+        return self
 
 
 # Подвиг 6. Ранее, в одном из подвигов мы с вами создавали односвязный список с объектами класса StackObj
@@ -224,82 +224,82 @@
 # P.S. В программе достаточно только объявить классы. На экран ничего выводить не нужно.
 
 
-# class StackObj:
-#     def __init__(self, data):
-#         self.data = data
-#         self.next = None
-#
-#     @property
-#     def data(self):
-#         return self.__data
-#
-#     @data.setter
-#     def data(self, obj):
-#         self.__data = obj
-#
-#     @property
-#     def next(self):
-#         return self.__next
-#
-#     @next.setter
-#     def next(self, obj):
-#         self.__next = obj
-#
-#
-# class Stack:
-#     def __init__(self):
-#         self.top = None
-#
-#     @property
-#     def top(self):
-#         return self.__top
-#
-#     @top.setter
-#     def top(self, value):
-#         self.__top = value
-#
-#     def push_back(self, obj):
-#         """ Добавление объекта класса StackObj в конец односвязного списка"""
-#         if not self.top:
-#             self.top = obj
-#             return
-#         ptr = self.top
-#         while ptr.next:
-#             ptr = ptr.next
-#         ptr.next = obj
-#         return self
-#
-#
-#     def pop_back(self):
-#         """Удаление последнего объекта из односвязного списка"""
-#         if not self.top:
-#             return None
-#         ptr = self.top if self.top else None
-#         prev = None
-#         while ptr.next:
-#             prev = ptr
-#             ptr = ptr.next
-#         prev.next = None
-#
-#     @staticmethod
-#     def __is_verify_obj(obj):
-#         if not isinstance(obj, StackObj):
-#             raise ValueError('Операнд должен быть объектом StackObj')
-#
-#     def __add__(self, other):
-#         self.__is_verify_obj(other)
-#         return self.push_back(other)
-#
-#     def __mul__(self, other):
-#         if not isinstance(other, list):
-#             raise ValueError('Операнд должен быть списком')
-#         res = [self.push_back(StackObj(x)) for x in other]
-#         return self
-#
-#     def __imul__(self, other):
-#         if not isinstance(other, list):
-#             raise ValueError('Операнд должен быть списком')
-#         return self * other
+class StackObj:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+    @property
+    def data(self):
+        return self.__data
+
+    @data.setter
+    def data(self, obj):
+        self.__data = obj
+
+    @property
+    def next(self):
+        return self.__next
+
+    @next.setter
+    def next(self, obj):
+        self.__next = obj
+
+
+class Stack:
+    def __init__(self):
+        self.top = None
+
+    @property
+    def top(self):
+        return self.__top
+
+    @top.setter
+    def top(self, value):
+        self.__top = value
+
+    def push_back(self, obj):
+        """ Добавление объекта класса StackObj в конец односвязного списка"""
+        if not self.top:
+            self.top = obj
+            return
+        ptr = self.top
+        while ptr.next:
+            ptr = ptr.next
+        ptr.next = obj
+        return self
+
+
+    def pop_back(self):
+        """Удаление последнего объекта из односвязного списка"""
+        if not self.top:
+            return None
+        ptr = self.top if self.top else None
+        prev = None
+        while ptr.next:
+            prev = ptr
+            ptr = ptr.next
+        prev.next = None
+
+    @staticmethod
+    def __is_verify_obj(obj):
+        if not isinstance(obj, StackObj):
+            raise ValueError('Операнд должен быть объектом StackObj')
+
+    def __add__(self, other):
+        self.__is_verify_obj(other)
+        return self.push_back(other)
+
+    def __mul__(self, other):
+        if not isinstance(other, list):
+            raise ValueError('Операнд должен быть списком')
+        res = [self.push_back(StackObj(x)) for x in other]
+        return self
+
+    def __imul__(self, other):
+        if not isinstance(other, list):
+            raise ValueError('Операнд должен быть списком')
+        return self * other
 
 
 # Подвиг 7. Вам поручается создать программу по учету книг (библиотеку). Для этого необходимо в программе
@@ -341,30 +341,30 @@
 # P.S. В программе достаточно только объявить классы. На экран ничего выводить не нужно.
 
 
-# class Book:
-#     def __init__(self, title, author, year):
-#         self.title = title
-#         self.author = author
-#         self.year = year
-#
-#
-# class Lib:
-#     def __init__(self):
-#         self.book_list = []
-#
-#     def __add__(self, other):
-#         self.book_list.append(other)
-#         return self
-#
-#     def __sub__(self, other):
-#         if isinstance(other, Book):
-#             self.book_list.remove(other)
-#         elif isinstance(other, int):
-#             self.book_list.pop(other)
-#         return self
-#
-#     def __len__(self):
-#         return len(self.book_list)
+class Book:
+    def __init__(self, title, author, year):
+        self.title = title
+        self.author = author
+        self.year = year
+
+
+class Lib:
+    def __init__(self):
+        self.book_list = []
+
+    def __add__(self, other):
+        self.book_list.append(other)
+        return self
+
+    def __sub__(self, other):
+        if isinstance(other, Book):
+            self.book_list.remove(other)
+        elif isinstance(other, int):
+            self.book_list.pop(other)
+        return self
+
+    def __len__(self):
+        return len(self.book_list)
 
 
 # Подвиг 8. Вам необходимо создать простую программу по учету семейного бюджета. Для этого в программе объявите
@@ -413,31 +413,31 @@
 # P.S. В программе требуется только объявить класс. На экран ничего выводить не нужно.
 
 
-# class Item:
-#     def __init__(self, name, money):
-#         self.name = name
-#         self.money = money
-#
-#     def __add__(self, other):
-#         return self.money + other
-#
-#     def __radd__(self, other):
-#         return self.__add__(other)
-#
-#
-# class Budget:
-#     def __init__(self):
-#         self.items = []
-#
-#     def add_item(self, it):
-#         self.items.append(it)
-#
-#     def remove_item(self, indx):
-#         if type(indx) == int and indx > len(self.items):
-#             self.items.pop(indx)
-#
-#     def get_items(self):
-#         return self.items
+class Item:
+    def __init__(self, name, money):
+        self.name = name
+        self.money = money
+
+    def __add__(self, other):
+        return self.money + other
+
+    def __radd__(self, other):
+        return self.__add__(other)
+
+
+class Budget:
+    def __init__(self):
+        self.items = []
+
+    def add_item(self, it):
+        self.items.append(it)
+
+    def remove_item(self, indx):
+        if type(indx) == int and indx > len(self.items):
+            self.items.pop(indx)
+
+    def get_items(self):
+        return self.items
 
 
 # Подвиг 9. Объявите класс Box3D для представления прямоугольного параллелепипеда (бруска), объекты которого
@@ -467,35 +467,35 @@
 # P.S. В программе достаточно только объявить класс Box3D. На экран ничего выводить не нужно.
 
 
-# class Box3D:
-#     def __init__(self, width, height, depth):
-#         self.width = width
-#         self.height = height
-#         self.depth = depth
-#
-#     def __add__(self, other):
-#         if isinstance(other, Box3D):
-#             return Box3D(self.width+other.width, self.height+other.height, self.depth+other.depth)
-#
-#     def __mul__(self, other):
-#         if isinstance(other, int):
-#             return Box3D(self.width*other, self.height*other, self.depth*other)
-#
-#     def __rmul__(self, other):
-#         return self * other
-#
-#     def __sub__(self, other):
-#         if isinstance(other, Box3D):
-#             return Box3D(self.width-other.width, self.height-other.height, self.depth-other.depth)
-#
-#     def __floordiv__(self, other):
-#         if isinstance(other, int):
-#             return Box3D(self.width // other, self.height // other, self.depth // other)
-#
-#     def __mod__(self, other):
-#         if isinstance(other, int):
-#             return Box3D(self.width % other, self.height % other, self.depth % other)
-#
+class Box3D:
+    def __init__(self, width, height, depth):
+        self.width = width
+        self.height = height
+        self.depth = depth
+
+    def __add__(self, other):
+        if isinstance(other, Box3D):
+            return Box3D(self.width+other.width, self.height+other.height, self.depth+other.depth)
+
+    def __mul__(self, other):
+        if isinstance(other, int):
+            return Box3D(self.width*other, self.height*other, self.depth*other)
+
+    def __rmul__(self, other):
+        return self * other
+
+    def __sub__(self, other):
+        if isinstance(other, Box3D):
+            return Box3D(self.width-other.width, self.height-other.height, self.depth-other.depth)
+
+    def __floordiv__(self, other):
+        if isinstance(other, int):
+            return Box3D(self.width // other, self.height // other, self.depth // other)
+
+    def __mod__(self, other):
+        if isinstance(other, int):
+            return Box3D(self.width % other, self.height % other, self.depth % other)
+
 
 # Подвиг 10 (на повторение). В нейронных сетях использую операцию под названием Max Pooling.
 # Суть ее состоит в сканировании прямоугольной таблицы чисел (матрицы) окном определенного размера
