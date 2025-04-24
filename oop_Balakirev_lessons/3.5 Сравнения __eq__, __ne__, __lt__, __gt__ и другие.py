@@ -33,62 +33,62 @@
 # P.S. На экран в программе ничего выводить не нужно.
 
 
-# class Track:
-#     def __init__(self, start_x, start_y):
-#         self.start_x = start_x
-#         self.start_y = start_y
-#         self.tracks = []
-#
-#     def add_track(self, tr):
-#         if isinstance(tr, TrackLine):
-#             self.tracks.append(tr)
-#
-#     def get_tracks(self):
-#         return tuple(self.tracks)
-#
-#     def __len__(self):
-#         len_1 = ((self.start_x - self.tracks[0].x) ** 2 + (self.start_y - self.tracks[0].y) ** 2) ** 0.5
-#         return int(len_1 + sum(self.__get_length(i) for i in range(1, len(self.tracks))))
-#
-#     def __get_length(self, i):
-#         return ((self.tracks[i - 1].x - self.tracks[i].x) ** 2 + (self.tracks[i - 1].y - self.tracks[i].y) ** 2) ** 0.5
-#
-#     def __eq__(self, other):
-#         return len(self) == len(other)
-#
-#     def __lt__(self, other):
-#         return len(self) < len(other)
-#
-#
-# class TrackLine:
-#     def __init__(self, to_x, to_y, max_speed):
-#         self._to_x = to_x
-#         self._to_y = to_y
-#         self._max_speed = max_speed
-#
-#     @property
-#     def x(self):
-#         return self._to_x
-#
-#     @property
-#     def y(self):
-#         return self._to_y
-#
-#     @property
-#     def tracks(self):
-#         return self._max_speed
-#
-#
-# track1 = Track(0, 0)
-# track2 = Track(0, 1)
-#
-# track1.add_track(TrackLine(2, 4, 100))
-# track1.add_track(TrackLine(5, -4, 100))
-#
-# track2.add_track(TrackLine(3, 2, 90))
-# track2.add_track(TrackLine(10, 8, 90))
-#
-# res_eq = track1 == track2
+class Track:
+    def __init__(self, start_x, start_y):
+        self.start_x = start_x
+        self.start_y = start_y
+        self.tracks = []
+
+    def add_track(self, tr):
+        if isinstance(tr, TrackLine):
+            self.tracks.append(tr)
+
+    def get_tracks(self):
+        return tuple(self.tracks)
+
+    def __len__(self):
+        len_1 = ((self.start_x - self.tracks[0].x) ** 2 + (self.start_y - self.tracks[0].y) ** 2) ** 0.5
+        return int(len_1 + sum(self.__get_length(i) for i in range(1, len(self.tracks))))
+
+    def __get_length(self, i):
+        return ((self.tracks[i - 1].x - self.tracks[i].x) ** 2 + (self.tracks[i - 1].y - self.tracks[i].y) ** 2) ** 0.5
+
+    def __eq__(self, other):
+        return len(self) == len(other)
+
+    def __lt__(self, other):
+        return len(self) < len(other)
+
+
+class TrackLine:
+    def __init__(self, to_x, to_y, max_speed):
+        self._to_x = to_x
+        self._to_y = to_y
+        self._max_speed = max_speed
+
+    @property
+    def x(self):
+        return self._to_x
+
+    @property
+    def y(self):
+        return self._to_y
+
+    @property
+    def tracks(self):
+        return self._max_speed
+
+
+track1 = Track(0, 0)
+track2 = Track(0, 1)
+
+track1.add_track(TrackLine(2, 4, 100))
+track1.add_track(TrackLine(5, -4, 100))
+
+track2.add_track(TrackLine(3, 2, 90))
+track2.add_track(TrackLine(10, 8, 90))
+
+res_eq = track1 == track2
 
 
 # Подвиг 4. Объявите класс Dimensions (габариты) с атрибутами:
@@ -137,71 +137,71 @@
 # P.S. На экран в программе ничего выводить не нужно.
 
 
-# class Dimensions:
-#     MIN_DIMENSION = 10
-#     MAX_DIMENSION = 10000
-#
-#     def __init__(self, a, b, c):
-#         self.a = a
-#         self.b = b
-#         self.c = c
-#
-#     def __is_valid(self, value):
-#         if not self.MIN_DIMENSION <= value <= self.MAX_DIMENSION:
-#             raise ValueError('Значение должно входить в диапазон допустимых значений')
-#
-#     @property
-#     def a(self):
-#         return self.__a
-#
-#     @a.setter
-#     def a(self, value):
-#         self.__is_valid(value)
-#         self.__a = value
-#
-#     @property
-#     def b(self):
-#         return self.__b
-#
-#     @b.setter
-#     def b(self, value):
-#         self.__is_valid(value)
-#         self.__b = value
-#
-#     @property
-#     def c(self):
-#         return self.__c
-#
-#     @c.setter
-#     def c(self, value):
-#         self.__is_valid(value)
-#         self.__c = value
-#
-#     def get_volume(self):
-#         return self.a * self.b * self.c
-#
-#     def __ge__(self, other):
-#         return Dimensions.get_volume(self) >= Dimensions.get_volume(other)
-#
-#     def __gt__(self, other):
-#         return Dimensions.get_volume(self) > Dimensions.get_volume(other)
-#
-#
-# class ShopItem:
-#     def __init__(self, name, price, dim):
-#         self.name = name
-#         self.price = price
-#         self.dim = dim
-#
-#
-# lst_shop = [ShopItem('кеды', 1024, Dimensions(40, 30, 120)),
-#             ShopItem('зонт', 500.24, Dimensions(10, 20, 50)),
-#             ShopItem('холодильник', 40000, Dimensions(2000, 600, 500)),
-#             ShopItem('табуретка', 2000.99, Dimensions(500, 200, 200))]
-#
-# lst_shop_sorted = sorted(lst_shop, key=lambda x: x.dim)
-# for i in lst_shop_sorted:
-#     print(i.name)
+class Dimensions:
+    MIN_DIMENSION = 10
+    MAX_DIMENSION = 10000
+
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
+
+    def __is_valid(self, value):
+        if not self.MIN_DIMENSION <= value <= self.MAX_DIMENSION:
+            raise ValueError('Значение должно входить в диапазон допустимых значений')
+
+    @property
+    def a(self):
+        return self.__a
+
+    @a.setter
+    def a(self, value):
+        self.__is_valid(value)
+        self.__a = value
+
+    @property
+    def b(self):
+        return self.__b
+
+    @b.setter
+    def b(self, value):
+        self.__is_valid(value)
+        self.__b = value
+
+    @property
+    def c(self):
+        return self.__c
+
+    @c.setter
+    def c(self, value):
+        self.__is_valid(value)
+        self.__c = value
+
+    def get_volume(self):
+        return self.a * self.b * self.c
+
+    def __ge__(self, other):
+        return Dimensions.get_volume(self) >= Dimensions.get_volume(other)
+
+    def __gt__(self, other):
+        return Dimensions.get_volume(self) > Dimensions.get_volume(other)
+
+
+class ShopItem:
+    def __init__(self, name, price, dim):
+        self.name = name
+        self.price = price
+        self.dim = dim
+
+
+lst_shop = [ShopItem('кеды', 1024, Dimensions(40, 30, 120)),
+            ShopItem('зонт', 500.24, Dimensions(10, 20, 50)),
+            ShopItem('холодильник', 40000, Dimensions(2000, 600, 500)),
+            ShopItem('табуретка', 2000.99, Dimensions(500, 200, 200))]
+
+lst_shop_sorted = sorted(lst_shop, key=lambda x: x.dim)
+for i in lst_shop_sorted:
+    print(i.name)
 
 
 # Подвиг 5. Имеется стихотворение, представленное следующим списком строк:
@@ -234,37 +234,37 @@
 # P.S. На экран в программе ничего выводить не нужно.
 
 
-# class StringText:
-#     def __init__(self, lst_words):
-#         self.lst_words = lst_words
-#
-#     def __ge__(self, other):
-#         return len(self.lst_words) >= len(other.lst_words)
-#
-#     def __gt__(self, other):
-#         return len(self.lst_words) > len(other.lst_words)
-#
-#
-# stich = ["Я к вам пишу – чего же боле?",
-#          "Что я могу еще сказать?",
-#          "Теперь, я знаю, в вашей воле",
-#          "Меня презреньем наказать.",
-#          "Но вы, к моей несчастной доле",
-#          "Хоть каплю жалости храня,",
-#          "Вы не оставите меня."]
-#
-# simbols = "–?!,.;"
-# lst_words = []
-#
-# for i in stich:
-#     for s in simbols:
-#         while i.count(s):
-#             i = i.replace(s, ' ')
-#     lst_words += [i.split()]
-#
-# lst_text = [StringText(x) for x in lst_words]
-# lst_text_sorted = sorted(lst_text, key=lambda x: len(x.lst_words), reverse=True)
-# lst_text_sorted = [' '.join(x.lst_words) for x in lst_text_sorted]
+class StringText:
+    def __init__(self, lst_words):
+        self.lst_words = lst_words
+
+    def __ge__(self, other):
+        return len(self.lst_words) >= len(other.lst_words)
+
+    def __gt__(self, other):
+        return len(self.lst_words) > len(other.lst_words)
+
+
+stich = ["Я к вам пишу – чего же боле?",
+         "Что я могу еще сказать?",
+         "Теперь, я знаю, в вашей воле",
+         "Меня презреньем наказать.",
+         "Но вы, к моей несчастной доле",
+         "Хоть каплю жалости храня,",
+         "Вы не оставите меня."]
+
+simbols = "–?!,.;"
+lst_words = []
+
+for i in stich:
+    for s in simbols:
+        while i.count(s):
+            i = i.replace(s, ' ')
+    lst_words += [i.split()]
+
+lst_text = [StringText(x) for x in lst_words]
+lst_text_sorted = sorted(lst_text, key=lambda x: len(x.lst_words), reverse=True)
+lst_text_sorted = [' '.join(x.lst_words) for x in lst_text_sorted]
 
 
 # Подвиг 6. Ваша задача написать программу поиска слова в строке. Задача усложняется тем, что слово должно
@@ -311,46 +311,46 @@
 # знаков пунктуаций и их словоформы). Выведите на экран полученное число.
 
 
-# class Morph:
-#     def __init__(self, *args):
-#         self.words = list(map(lambda x: x.strip(' .,!?;:'), args))
-#
-#     def add_word(self, word):
-#         if word not in self.words:
-#             self.words.append(word)
-#
-#     def get_words(self):
-#         return tuple(self.words)
-#
-#     @classmethod
-#     def __verify_data(cls, other):
-#         if not isinstance(other, (str, Morph)):
-#             ValueError('операнд справа должен быть str или Morph')
-#         return other
-#
-#     def __eq__(self, other):
-#         sc = Morph.__verify_data(other)
-#         if isinstance(sc, str):
-#             return sc.lower() in self.words
-#         if isinstance(sc, Morph):
-#             return self == other
-#
-#
-# dict_words = [Morph('связь', 'связи', 'связью', 'связи', 'связей', 'связям', 'связями', 'связях'),
-#               Morph('формула', 'формулы', 'формуле', 'формулу', 'формулой', 'формул', 'формулам', 'формулами',
-#                     'формулах'),
-#               Morph('вектор', 'вектора', 'вектору', 'вектором', 'векторе', 'векторы', 'векторов', 'векторам',
-#                     'векторами', 'векторах'
-#                     ),
-#               Morph('эффект', 'эффекта', 'эффекту', 'эффектом', 'эффекте', 'эффекты', 'эффектов', 'эффектам',
-#                     'эффектами', 'эффектах'
-#                     ), Morph('день', 'дня', 'дню', 'днем', 'дне', 'дни', 'дням', 'днями', 'днях'
-#                              )]
-#
-#
-# text = input()
-# words = list(map(lambda x: x.strip(' .,!?;:'), text.split()))
-# print(sum(morph == word for morph in dict_words for word in words))
+class Morph:
+    def __init__(self, *args):
+        self.words = list(map(lambda x: x.strip(' .,!?;:'), args))
+
+    def add_word(self, word):
+        if word not in self.words:
+            self.words.append(word)
+
+    def get_words(self):
+        return tuple(self.words)
+
+    @classmethod
+    def __verify_data(cls, other):
+        if not isinstance(other, (str, Morph)):
+            ValueError('операнд справа должен быть str или Morph')
+        return other
+
+    def __eq__(self, other):
+        sc = Morph.__verify_data(other)
+        if isinstance(sc, str):
+            return sc.lower() in self.words
+        if isinstance(sc, Morph):
+            return self == other
+
+
+dict_words = [Morph('связь', 'связи', 'связью', 'связи', 'связей', 'связям', 'связями', 'связях'),
+              Morph('формула', 'формулы', 'формуле', 'формулу', 'формулой', 'формул', 'формулам', 'формулами',
+                    'формулах'),
+              Morph('вектор', 'вектора', 'вектору', 'вектором', 'векторе', 'векторы', 'векторов', 'векторам',
+                    'векторами', 'векторах'
+                    ),
+              Morph('эффект', 'эффекта', 'эффекту', 'эффектом', 'эффекте', 'эффекты', 'эффектов', 'эффектам',
+                    'эффектами', 'эффектах'
+                    ), Morph('день', 'дня', 'дню', 'днем', 'дне', 'дни', 'дням', 'днями', 'днях'
+                             )]
+
+
+text = input()
+words = list(map(lambda x: x.strip(' .,!?;:'), text.split()))
+print(sum(morph == word for morph in dict_words for word in words))
 
 
 # Подвиг 7 (на повторение). Перед вами стоит задача выделения файлов с определенными расширениями из списка файлов,
@@ -387,18 +387,18 @@
 # P.S. На экран в программе ничего выводить не нужно.
 
 
-# class FileAcceptor:
-#     def __init__(self, *args):
-#         self.strings = list(args)
-#
-#     def __call__(self, filename):
-#         filename = filename.split('.')
-#         return filename[-1] in self.strings
-#
-#     def __add__(self, other):
-#         if isinstance(other, FileAcceptor):
-#             sc = other.strings
-#             return FileAcceptor(*set(self.strings) | set(sc))
+class FileAcceptor:
+    def __init__(self, *args):
+        self.strings = list(args)
+
+    def __call__(self, filename):
+        filename = filename.split('.')
+        return filename[-1] in self.strings
+
+    def __add__(self, other):
+        if isinstance(other, FileAcceptor):
+            sc = other.strings
+            return FileAcceptor(*set(self.strings) | set(sc))
 
 
 # Подвиг 8. В программе необходимо объявить классы для работы с кошельками в разных валютах:
@@ -471,88 +471,88 @@
 # P.S. В программе на экран ничего выводить не нужно, только объявить классы.
 
 
-# class CentralBank:
-#     rates = {'rub': 72.5, 'dollar': 1.0, 'euro': 1.15}
-#
-#     def __new__(cls, *args, **kwargs):
-#         return None
-#
-#     @classmethod
-#     def register(cls, money):
-#         money.cb = CentralBank
-#
-#
-# class Money:
-#     type_wallet = None
-#
-#     def __init__(self, volume=0):
-#         self.cb = None
-#         self.volume = volume
-#
-#     @property
-#     def cb(self):
-#         return self.__cb
-#
-#     @cb.setter
-#     def cb(self, value):
-#         self.__cb = value
-#
-#     @property
-#     def volume(self):
-#         return self.__volume
-#
-#     @volume.setter
-#     def volume(self, value):
-#         self.__volume = value
-#
-#     def __get_value(self, other):
-#         if self.cb is None:
-#             raise ValueError("Неизвестен курс валют.")
-#
-#         if self.type_wallet is None:
-#             raise ValueError('Неизвестен тип кошелька')
-#
-#         v1 = self.volume / self.cb.rates[self.type_wallet]
-#         v2 = other.volume / other.cb.rates[other.type_wallet]
-#         return v1, v2
-#
-#     def __eq__(self, other):
-#         v1, v2 = self.__get_value(other)
-#         return abs(v1 - v2) < 0.1
-#
-#     def __lt__(self, other):
-#         v1, v2 = self.__get_value(other)
-#         return v1 < v2
-#
-#     def __le__(self, other):
-#         v1, v2 = self.__get_value(other)
-#         return v1 <= v2
-#
-#
-# class MoneyR(Money):
-#     type_wallet = 'rub'
-#
-#
-# class MoneyD(Money):
-#     type_wallet = 'dollar'
-#
-#
-# class MoneyE(Money):
-#     type_wallet = 'euro'
-#
-#
-# CentralBank.rates = {'rub': 72.5, 'dollar': 1.0, 'euro': 1.15}
-#
-# r = MoneyR(45000)
-# d = MoneyD(500)
-#
-# CentralBank.register(r)
-# CentralBank.register(d)
-#
-# if r > d:
-#     print("неплохо")
-# else:
-#     print("нужно поднажать")
+class CentralBank:
+    rates = {'rub': 72.5, 'dollar': 1.0, 'euro': 1.15}
+
+    def __new__(cls, *args, **kwargs):
+        return None
+
+    @classmethod
+    def register(cls, money):
+        money.cb = CentralBank
+
+
+class Money:
+    type_wallet = None
+
+    def __init__(self, volume=0):
+        self.cb = None
+        self.volume = volume
+
+    @property
+    def cb(self):
+        return self.__cb
+
+    @cb.setter
+    def cb(self, value):
+        self.__cb = value
+
+    @property
+    def volume(self):
+        return self.__volume
+
+    @volume.setter
+    def volume(self, value):
+        self.__volume = value
+
+    def __get_value(self, other):
+        if self.cb is None:
+            raise ValueError("Неизвестен курс валют.")
+
+        if self.type_wallet is None:
+            raise ValueError('Неизвестен тип кошелька')
+
+        v1 = self.volume / self.cb.rates[self.type_wallet]
+        v2 = other.volume / other.cb.rates[other.type_wallet]
+        return v1, v2
+
+    def __eq__(self, other):
+        v1, v2 = self.__get_value(other)
+        return abs(v1 - v2) < 0.1
+
+    def __lt__(self, other):
+        v1, v2 = self.__get_value(other)
+        return v1 < v2
+
+    def __le__(self, other):
+        v1, v2 = self.__get_value(other)
+        return v1 <= v2
+
+
+class MoneyR(Money):
+    type_wallet = 'rub'
+
+
+class MoneyD(Money):
+    type_wallet = 'dollar'
+
+
+class MoneyE(Money):
+    type_wallet = 'euro'
+
+
+CentralBank.rates = {'rub': 72.5, 'dollar': 1.0, 'euro': 1.15}
+
+r = MoneyR(45000)
+d = MoneyD(500)
+
+CentralBank.register(r)
+CentralBank.register(d)
+
+if r > d:
+    print("неплохо")
+else:
+    print("нужно поднажать")
 
 
 # Подвиг 9 (релакс). Необходимо объявить класс Body (тело), объекты которого создаются командой:
@@ -574,27 +574,27 @@
 # P.S. В программе только объявить класс, выводить на экран ничего не нужно.
 
 
-# class Body:
-#     def __init__(self, name, ro, volume):
-#         self.name = name
-#         self.ro =ro
-#         self.volume = volume
-#
-#     def get_weight(self):
-#         return self.ro * self.volume
-#
-#     @classmethod
-#     def get_other(cls, other):
-#         sc = other
-#         if isinstance(other, Body):
-#             sc = other.get_weight()
-#         return sc
-#
-#     def __eq__(self, other):
-#         return Body.get_other(self) == Body.get_other(other)
-#
-#     def __lt__(self, other):
-#         return Body.get_other(self) < Body.get_other(other)
+class Body:
+    def __init__(self, name, ro, volume):
+        self.name = name
+        self.ro =ro
+        self.volume = volume
+
+    def get_weight(self):
+        return self.ro * self.volume
+
+    @classmethod
+    def get_other(cls, other):
+        sc = other
+        if isinstance(other, Body):
+            sc = other.get_weight()
+        return sc
+
+    def __eq__(self, other):
+        return Body.get_other(self) == Body.get_other(other)
+
+    def __lt__(self, other):
+        return Body.get_other(self) < Body.get_other(other)
 
 
 # Подвиг 10. Объявите в программе класс с именем Box (ящик), объекты которого должны создаваться командой:
