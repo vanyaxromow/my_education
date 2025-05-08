@@ -14,25 +14,25 @@
 # P.S. На экран ничего выводить не нужно, только объявить класс.
 
 
-# class Rect:
-#     def __init__(self, x, y, width, height):
-#         self.x = x
-#         self.y = y
-#         self.width = width
-#         self.height = height
-#
-#     def __eq__(self, other):
-#         return self.width, self.height == other.width, other.height
-#
-#     def __hash__(self):
-#         return hash((self.width, self.height))
-#
-#
-# r1 = Rect(10, 5, 100, 50)
-# r2 = Rect(-10, 4, 100, 50)
-#
-# h1, h2 = hash(r1), hash(r2)   # h1 == h2
-# print(h1 == h2)
+class Rect:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+
+    def __eq__(self, other):
+        return self.width, self.height == other.width, other.height
+
+    def __hash__(self):
+        return hash((self.width, self.height))
+
+
+r1 = Rect(10, 5, 100, 50)
+r2 = Rect(-10, 4, 100, 50)
+
+h1, h2 = hash(r1), hash(r2)   # h1 == h2
+print(h1 == h2)
 
 
 # Подвиг 6. Объявите класс с именем ShopItem (товар), объекты которого создаются командой:
@@ -83,35 +83,35 @@
 # Sample Output:
 
 
-# import sys
-#
-#
-# class ShopItem:
-#     def __init__(self, name, weight, price):
-#         self.name = name
-#         self.weight = weight
-#         self.price = price
-#
-#     def __repr__(self):
-#         return f'{self.name} - {self.weight} - {self.price}'
-#
-#     def __hash__(self):
-#         return hash((self.name.lower(), self.weight, self.price))
-#
-#     def __eq__(self, other):
-#         return self.name.lower(), self.weight, self.price == other.name.lower(), other.weight, other.price
-#
-#
-# # считывание списка из входного потока
-# lst_in = list(map(str.strip, sys.stdin.readlines()))  # список lst_in в программе не менять!
-# shop_items = {}
-# lst = []
-#
-# for i in lst_in:
-#     name, weight, price = i.rsplit(maxsplit=2)
-#     obj = ShopItem(name[:], weight, price)
-#     shop_items.setdefault(obj, [obj, 0])[1] += 1
-# print(shop_items)
+import sys
+
+
+class ShopItem:
+    def __init__(self, name, weight, price):
+        self.name = name
+        self.weight = weight
+        self.price = price
+
+    def __repr__(self):
+        return f'{self.name} - {self.weight} - {self.price}'
+
+    def __hash__(self):
+        return hash((self.name.lower(), self.weight, self.price))
+
+    def __eq__(self, other):
+        return self.name.lower(), self.weight, self.price == other.name.lower(), other.weight, other.price
+
+
+# считывание списка из входного потока
+lst_in = list(map(str.strip, sys.stdin.readlines()))  # список lst_in в программе не менять!
+shop_items = {}
+lst = []
+
+for i in lst_in:
+    name, weight, price = i.rsplit(maxsplit=2)
+    obj = ShopItem(name[:], weight, price)
+    shop_items.setdefault(obj, [obj, 0])[1] += 1
+print(shop_items)
 
 
 # Подвиг 7. Объявите класс с именем DataBase (база данных - БД), объекты которого создаются командой:
@@ -179,54 +179,54 @@
 # Sample Output:
 
 
-# import sys
-#
-#
-# class DataBase:
-#     list_db = []
-#
-#     def __init__(self, path):
-#         self.path = path
-#         self.dict_db = {}
-#
-#     def write(self, record):
-#         self.dict_db.setdefault(record, [])
-#         self.dict_db[record].append(record)
-#
-#     def read(self, pk):
-#         for i in self.dict_db.values():
-#             for j in i:
-#                 if j.pk == pk:
-#                     return j
-#
-#
-# class Record:
-#     id = 1
-#
-#     def __init__(self, fio, descr, old):
-#         self.fio = str(fio)
-#         self.descr = str(descr)
-#         self.old = int(old)
-#         self.pk = Record.id
-#         Record.id += 1
-#
-#     def __repr__(self):
-#         return f'{self.fio} - {self.descr} - {self.old}'
-#
-#     def __hash__(self):
-#         return hash((self.fio.lower(), self.old))
-#
-#     def __eq__(self, other):
-#         return hash(self.fio), hash(self.old) == hash(other.fio), hash(other.old)
-#
-#
-# # считывание списка из входного потока
-# lst_in = list(map(str.strip, sys.stdin.readlines()))  # список lst_in не менять!
-#
-# # здесь продолжайте программу (используйте список строк lst_in)
-# db = DataBase('path')
-# for i in lst_in:
-#     db.write(Record(*i.split(';')))
+import sys
+
+
+class DataBase:
+    list_db = []
+
+    def __init__(self, path):
+        self.path = path
+        self.dict_db = {}
+
+    def write(self, record):
+        self.dict_db.setdefault(record, [])
+        self.dict_db[record].append(record)
+
+    def read(self, pk):
+        for i in self.dict_db.values():
+            for j in i:
+                if j.pk == pk:
+                    return j
+
+
+class Record:
+    id = 1
+
+    def __init__(self, fio, descr, old):
+        self.fio = str(fio)
+        self.descr = str(descr)
+        self.old = int(old)
+        self.pk = Record.id
+        Record.id += 1
+
+    def __repr__(self):
+        return f'{self.fio} - {self.descr} - {self.old}'
+
+    def __hash__(self):
+        return hash((self.fio.lower(), self.old))
+
+    def __eq__(self, other):
+        return hash(self.fio), hash(self.old) == hash(other.fio), hash(other.old)
+
+
+# считывание списка из входного потока
+lst_in = list(map(str.strip, sys.stdin.readlines()))  # список lst_in не менять!
+
+# здесь продолжайте программу (используйте список строк lst_in)
+db = DataBase('path')
+for i in lst_in:
+    db.write(Record(*i.split(';')))
 
 
 # Подвиг 8. Из входного потока необходимо прочитать список строк командой:
@@ -266,28 +266,28 @@
 # Sample Output:
 
 
-# import sys
-#
-#
-# class BookStudy:
-#     def __init__(self, name, author, year):
-#         self.name = name
-#         self.author = author
-#         self.year = year
-#
-#     def __hash__(self):
-#         return hash((self.name.lower(), self.author.lower()))
-#
-#     def __eq__(self, other):
-#         return hash(self) == hash(other)
-#
-#
-# # считывание списка из входного потока
-# lst_in = list(map(str.strip, sys.stdin.readlines()))  # список lst_in не менять!
-#
-# lst_bs = [BookStudy(*x.split(';')) for x in lst_in]
-# unique_books = sum(hash(x) != hash(lst_bs[0]) for x in lst_bs)
-# print(unique_books)
+import sys
+
+
+class BookStudy:
+    def __init__(self, name, author, year):
+        self.name = name
+        self.author = author
+        self.year = year
+
+    def __hash__(self):
+        return hash((self.name.lower(), self.author.lower()))
+
+    def __eq__(self, other):
+        return hash(self) == hash(other)
+
+
+# считывание списка из входного потока
+lst_in = list(map(str.strip, sys.stdin.readlines()))  # список lst_in не менять!
+
+lst_bs = [BookStudy(*x.split(';')) for x in lst_in]
+unique_books = sum(hash(x) != hash(lst_bs[0]) for x in lst_bs)
+print(unique_books)
 
 
 # Подвиг 9 (релакс). Объявите класс с именем Dimensions, объекты которого создаются командой:
@@ -326,25 +326,25 @@
 # s_inp = input()  # эту строку (переменную s_inp) в программе не менять
 #
 #
-# class Dimensions:
-#     def __init__(self, a, b, c):
-#         self.a = a
-#         self.b = b
-#         self.c = c
-#         self.__valid_attr(self.a, self.b, self.c)
-#
-#     def __valid_attr(self, a, b, c):
-#         if a <= 0 or b <= 0 or c <= 0:
-#             raise ValueError("габаритные размеры должны быть положительными числами")
-#
-#     def __hash__(self):
-#         return hash((self.a, self.b, self.c))
-#
-#
-# lst = [list(map(lambda i: float(i), x)) for row in s_inp.split('; ') for x in [row.split()]]
-# lst_dims = [Dimensions(*x) for x in lst]
-# lst_dims.sort(key=hash)
-# print(lst_dims)
+class Dimensions:
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
+        self.__valid_attr(self.a, self.b, self.c)
+
+    def __valid_attr(self, a, b, c):
+        if a <= 0 or b <= 0 or c <= 0:
+            raise ValueError("габаритные размеры должны быть положительными числами")
+
+    def __hash__(self):
+        return hash((self.a, self.b, self.c))
+
+
+lst = [list(map(lambda i: float(i), x)) for row in s_inp.split('; ') for x in [row.split()]]
+lst_dims = [Dimensions(*x) for x in lst]
+lst_dims.sort(key=hash)
+print(lst_dims)
 
 
 # Подвиг 10 (на повторение). Объявите класс с именем Triangle, объекты которого создаются командой:
@@ -376,50 +376,50 @@
 # P.S. На экран ничего выводить не нужно, только объявить класс Triangle.
 
 
-# class Integer:
-#
-#     def __set_name__(self, owner, name):
-#         self.name = '_' + name
-#
-#     def __get__(self, instance, owner):
-#         return getattr(instance, self.name, None)
-#
-#     def __set__(self, instance, value):
-#         if type(value) not in (int, float) or value <= 0:
-#             raise ValueError("длины сторон треугольника должны быть положительными числами")
-#         setattr(instance, self.name, value)
-#
-#
-# class Triangle:
-#     a = Integer()
-#     b = Integer()
-#     c = Integer()
-#
-#     def __init__(self, a, b, c):
-#         self.a = a
-#         self.b = b
-#         self.c = c
-#
-#     @staticmethod
-#     def __is_triangle(a, b, c):
-#         if a and b and c:
-#             return a < b + c and b < a+c and c < a+c
-#         return True
-#
-#     def __setattr__(self, key, value):
-#         if (key == 'a' and not self.__is_triangle(value, self.b, self.c)) or \
-#                 (key == 'b' and not self.__is_triangle(self.a, value, self.c)) or \
-#                 (key == 'c' and not self.__is_triangle(self.a, self.b, value)):
-#             raise ValueError("с указанными длинами нельзя образовать треугольник")
-#         super().__setattr__(key, value)
-#
-#     def __len__(self):
-#         return int(self.a + self.b + self.c)
-#
-#     def __call__(self, *args, **kwargs):
-#         p = (self.a + self.b + self.c) / 2
-#         s = (p * (p - self.a) * (p - self.b) * (p - self.c)) ** 0.5
-#         return s
+class Integer:
+
+    def __set_name__(self, owner, name):
+        self.name = '_' + name
+
+    def __get__(self, instance, owner):
+        return getattr(instance, self.name, None)
+
+    def __set__(self, instance, value):
+        if type(value) not in (int, float) or value <= 0:
+            raise ValueError("длины сторон треугольника должны быть положительными числами")
+        setattr(instance, self.name, value)
+
+
+class Triangle:
+    a = Integer()
+    b = Integer()
+    c = Integer()
+
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
+
+    @staticmethod
+    def __is_triangle(a, b, c):
+        if a and b and c:
+            return a < b + c and b < a+c and c < a+c
+        return True
+
+    def __setattr__(self, key, value):
+        if (key == 'a' and not self.__is_triangle(value, self.b, self.c)) or \
+                (key == 'b' and not self.__is_triangle(self.a, value, self.c)) or \
+                (key == 'c' and not self.__is_triangle(self.a, self.b, value)):
+            raise ValueError("с указанными длинами нельзя образовать треугольник")
+        super().__setattr__(key, value)
+
+    def __len__(self):
+        return int(self.a + self.b + self.c)
+
+    def __call__(self, *args, **kwargs):
+        p = (self.a + self.b + self.c) / 2
+        s = (p * (p - self.a) * (p - self.b) * (p - self.c)) ** 0.5
+        return s
 
 
 
