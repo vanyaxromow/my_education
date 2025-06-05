@@ -29,29 +29,29 @@
 # P.P.S. Для создания локальных атрибутов используйте коллекцию __dict__ объекта класса Record.
 
 
-# class Record:
-#     def __init__(self, **kwargs):
-#         self.__dict__.update(kwargs)
-#         self.__total_attrs = len(kwargs)
-#         self.__attrs = tuple(self.__dict__.keys())
-#
-#     def __check_value(self, indx):
-#         if not -len(self.__dict__.keys()) <= indx < len(self.__dict__.keys()) or not isinstance(indx, int):
-#             raise IndexError('неверный индекс поля')
-#
-#     def __getitem__(self, item):
-#         self.__check_value(item)
-#         return getattr(self, self.__attrs[item])
-#
-#     def __setitem__(self, key, value):
-#         self.__check_value(key)
-#         setattr(self, self.__attrs[key], value)
-#
-#
-# a = Record(pk=1, title='Python ООП', author='Балакирев')
-# a[2] = 'Петров'
-#
-# print(a.__dict__)
+class Record:
+    def __init__(self, **kwargs):
+        self.__dict__.update(kwargs)
+        self.__total_attrs = len(kwargs)
+        self.__attrs = tuple(self.__dict__.keys())
+
+    def __check_value(self, indx):
+        if not -len(self.__dict__.keys()) <= indx < len(self.__dict__.keys()) or not isinstance(indx, int):
+            raise IndexError('неверный индекс поля')
+
+    def __getitem__(self, item):
+        self.__check_value(item)
+        return getattr(self, self.__attrs[item])
+
+    def __setitem__(self, key, value):
+        self.__check_value(key)
+        setattr(self, self.__attrs[key], value)
+
+
+a = Record(pk=1, title='Python ООП', author='Балакирев')
+a[2] = 'Петров'
+
+print(a.__dict__)
 
 
 # Подвиг 3. Вам необходимо для навигатора реализовать определение маршрутов. Для этого в программе нужно объявить
@@ -89,29 +89,29 @@
 # P.S. В программе нужно объявить только класс. Выводить на экран ничего не нужно.
 
 
-# class Track:
-#     def __init__(self, start_x, start_y, speed=None):
-#         self.coord = start_x, start_y
-#         self.speed = speed
-#         self.points = {}
-#         self.points_key = []
-#
-#     def add_point(self, x, y, speed):
-#         self.points[x, y] = speed
-#         keys = x, y
-#         self.points_key.append(tuple(keys))
-#
-#     def __check_indx(self, indx):
-#         if not 0 <= indx < len(self.points):
-#             raise IndexError('некорректный индекс')
-#
-#     def __getitem__(self, item):
-#         self.__check_indx(item)
-#         return self.points_key[item], self.points[self.points_key[item]]
-#
-#     def __setitem__(self, key, value):
-#         self.__check_indx(key)
-#         self.points[self.points_key[key]] = value
+class Track:
+    def __init__(self, start_x, start_y, speed=None):
+        self.coord = start_x, start_y
+        self.speed = speed
+        self.points = {}
+        self.points_key = []
+
+    def add_point(self, x, y, speed):
+        self.points[x, y] = speed
+        keys = x, y
+        self.points_key.append(tuple(keys))
+
+    def __check_indx(self, indx):
+        if not 0 <= indx < len(self.points):
+            raise IndexError('некорректный индекс')
+
+    def __getitem__(self, item):
+        self.__check_indx(item)
+        return self.points_key[item], self.points[self.points_key[item]]
+
+    def __setitem__(self, key, value):
+        self.__check_indx(key)
+        self.points[self.points_key[key]] = value
 
 
 # Подвиг 4. Вам необходимо написать программу по работе с массивом однотипных данных (например, только числа
@@ -159,45 +159,45 @@
 # числами и создайте массив, используя тот же класс Array, с этим новым типом данных.
 
 
-# class Array:
-#     def __init__(self, max_length, cell):
-#         self.max_length = max_length
-#         self.cell = cell
-#         self.array = [cell() for _ in range(self.max_length)]
-#
-#     def __str__(self):
-#         return f'{' '.join([str(x) for x in self.array])}'
-#
-#     def __check_indx(self, indx):
-#         if not isinstance(indx, int) or not 0 <= indx < self.max_length:
-#             raise IndexError('неверный индекс для доступа к элементам массива')
-#
-#     def __getitem__(self, item):
-#         self.__check_indx(item)
-#         return self.array[item].value
-#
-#     def __setitem__(self, key, value):
-#         self.__check_indx(key)
-#         self.array[key].value = value
-#
-#
-# class Integer:
-#     def __init__(self, start_value=0):
-#         self.__value = start_value
-#
-#     def __repr__(self):
-#         return f'{self.__value}'
-#
-#     @property
-#     def value(self):
-#         return self.__value
-#
-#     @value.setter
-#     def value(self, value):
-#         if not isinstance(value, int):
-#             raise ValueError('должно быть целое число')
-#
-#         self.__value = value
+class Array:
+    def __init__(self, max_length, cell):
+        self.max_length = max_length
+        self.cell = cell
+        self.array = [cell() for _ in range(self.max_length)]
+
+    def __str__(self):
+        return f'{' '.join([str(x) for x in self.array])}'
+
+    def __check_indx(self, indx):
+        if not isinstance(indx, int) or not 0 <= indx < self.max_length:
+            raise IndexError('неверный индекс для доступа к элементам массива')
+
+    def __getitem__(self, item):
+        self.__check_indx(item)
+        return self.array[item].value
+
+    def __setitem__(self, key, value):
+        self.__check_indx(key)
+        self.array[key].value = value
+
+
+class Integer:
+    def __init__(self, start_value=0):
+        self.__value = start_value
+
+    def __repr__(self):
+        return f'{self.__value}'
+
+    @property
+    def value(self):
+        return self.__value
+
+    @value.setter
+    def value(self, value):
+        if not isinstance(value, int):
+            raise ValueError('должно быть целое число')
+
+        self.__value = value
 
 
 # Большой подвиг 5. Вам необходимо написать программу для удобного обращения с таблицами однотипных данных
@@ -264,53 +264,53 @@
 # объекты-свойства (property).
 
 
-# class IntegerValue:
-#
-#     @classmethod
-#     def check_value(cls, value):
-#         if type(value) != int:
-#             raise ValueError('возможны только целочисленные значения')
-#
-#     def __set_name__(self, owner, name):
-#         self.name = '_' + name
-#
-#     def __get__(self, instance, owner):
-#         return getattr(instance, self.name)
-#
-#     def __set__(self, instance, value):
-#         self.check_value(value)
-#         setattr(instance, self.name, value)
-#
-#
-# class CellInteger:
-#     value = IntegerValue()
-#
-#     def __init__(self, start_value=0):
-#         self.value = start_value
-#
-#
-# class TableValues:
-#     def __init__(self, rows, cols, cell=None):
-#         if cell is None:
-#             raise ValueError('параметр cell не указан')
-#         self.rows = rows
-#         self.cols = cols
-#         self.cell = cell
-#         self.cells = tuple((self.cell(),) * cols for _ in range(rows))
-#
-#     def check_indx(self, x, y):
-#         if type(x) != int or not 0 <= x < self.rows or type(y) != int or not 0 <= y < self.rows:
-#             raise IndexError('Неверные значения индексов')
-#
-#     def __getitem__(self, item):
-#         i, j = item
-#         self.check_indx(i, j)
-#         return self.cells[i][j].value
-#
-#     def __setitem__(self, key, value):
-#         i, j = key
-#         self.check_indx(i, j)
-#         self.cells[i][j].value = value
+class IntegerValue:
+
+    @classmethod
+    def check_value(cls, value):
+        if type(value) != int:
+            raise ValueError('возможны только целочисленные значения')
+
+    def __set_name__(self, owner, name):
+        self.name = '_' + name
+
+    def __get__(self, instance, owner):
+        return getattr(instance, self.name)
+
+    def __set__(self, instance, value):
+        self.check_value(value)
+        setattr(instance, self.name, value)
+
+
+class CellInteger:
+    value = IntegerValue()
+
+    def __init__(self, start_value=0):
+        self.value = start_value
+
+
+class TableValues:
+    def __init__(self, rows, cols, cell=None):
+        if cell is None:
+            raise ValueError('параметр cell не указан')
+        self.rows = rows
+        self.cols = cols
+        self.cell = cell
+        self.cells = tuple((self.cell(),) * cols for _ in range(rows))
+
+    def check_indx(self, x, y):
+        if type(x) != int or not 0 <= x < self.rows or type(y) != int or not 0 <= y < self.rows:
+            raise IndexError('Неверные значения индексов')
+
+    def __getitem__(self, item):
+        i, j = item
+        self.check_indx(i, j)
+        return self.cells[i][j].value
+
+    def __setitem__(self, key, value):
+        i, j = key
+        self.check_indx(i, j)
+        self.cells[i][j].value = value
 
 
 # Подвиг 6. Ранее вы уже создавали стек-подобную структуру, когда один объект ссылается на следующий и так по
@@ -367,91 +367,91 @@
 # P.S. В программе нужно объявить только классы. Выводить на экран ничего не нужно.
 
 
-# class StackObj:
-#     def __init__(self, data):
-#         self.__data = data
-#         self.next = None
-#
-#     @property
-#     def data(self):
-#         return self.__data
-#
-#     @property
-#     def next(self):
-#         return self.__next
-#
-#     @next.setter
-#     def next(self, obj):
-#         self.__next = obj
-#
-#     def __repr__(self):
-#         return self.data
-#
-# class Stack:
-#     top = None
-#
-#     def __init__(self):
-#         self.top = None if Stack.top is None else Stack.top
-#
-#     def push(self, obj):
-#         if not self.top:
-#             self.top = obj
-#             return
-#
-#         prev = self.top
-#         while prev.next:
-#             prev = prev.next
-#         prev.next = obj
-#
-#     def pop(self):
-#         if not self.top:
-#             return
-#
-#         ptr = self.top
-#         prev = None
-#         while ptr.next:
-#             prev = ptr
-#             ptr = ptr.next
-#
-#         prev.next = None
-#         return ptr
-#
-#     def get_count(self):
-#         count = 0
-#         if self.top:
-#             ptr = self.top
-#             count += 1
-#             while ptr.next:
-#                 ptr = ptr.next
-#                 count += 1
-#         return count
-#
-#     def check_indx(self, i):
-#         if type(i) != int or not 0 <= i < self.get_count():
-#             raise IndexError('неверный индекс')
-#
-#     def __getitem__(self, item):
-#         self.check_indx(item)
-#         indx = 0
-#         ptr = self.top
-#         while indx != item:
-#             ptr = ptr.next
-#             indx += 1
-#
-#         return ptr
-#
-#     def __setitem__(self, key, value):
-#         self.check_indx(key)
-#         indx = 0
-#         left = None
-#         ptr = self.top
-#         right = ptr.next
-#         while indx != key:
-#             left = ptr
-#             ptr = ptr.next
-#             indx += 1
-#         left.next = value
-#         value.next = ptr.next
+class StackObj:
+    def __init__(self, data):
+        self.__data = data
+        self.next = None
+
+    @property
+    def data(self):
+        return self.__data
+
+    @property
+    def next(self):
+        return self.__next
+
+    @next.setter
+    def next(self, obj):
+        self.__next = obj
+
+    def __repr__(self):
+        return self.data
+
+class Stack:
+    top = None
+
+    def __init__(self):
+        self.top = None if Stack.top is None else Stack.top
+
+    def push(self, obj):
+        if not self.top:
+            self.top = obj
+            return
+
+        prev = self.top
+        while prev.next:
+            prev = prev.next
+        prev.next = obj
+
+    def pop(self):
+        if not self.top:
+            return
+
+        ptr = self.top
+        prev = None
+        while ptr.next:
+            prev = ptr
+            ptr = ptr.next
+
+        prev.next = None
+        return ptr
+
+    def get_count(self):
+        count = 0
+        if self.top:
+            ptr = self.top
+            count += 1
+            while ptr.next:
+                ptr = ptr.next
+                count += 1
+        return count
+
+    def check_indx(self, i):
+        if type(i) != int or not 0 <= i < self.get_count():
+            raise IndexError('неверный индекс')
+
+    def __getitem__(self, item):
+        self.check_indx(item)
+        indx = 0
+        ptr = self.top
+        while indx != item:
+            ptr = ptr.next
+            indx += 1
+
+        return ptr
+
+    def __setitem__(self, key, value):
+        self.check_indx(key)
+        indx = 0
+        left = None
+        ptr = self.top
+        right = ptr.next
+        while indx != key:
+            left = ptr
+            ptr = ptr.next
+            indx += 1
+        left.next = value
+        value.next = ptr.next
 
 
 # Подвиг 7 (познание срезов). Объявите в программе класс с именем RadiusVector (радиус-вектор),
@@ -485,17 +485,17 @@
 # (списков, кортежей и т.п.).
 
 
-# class RadiusVector:
-#     def __init__(self, *args):
-#         self.coords = list(args)
-#
-#     def __getitem__(self, item):
-#         print(type(item))
-#         return tuple(self.coords[item]) if type(item) == slice else self.coords[item]
-#
-#     def __setitem__(self, key, value):
-#         print(type(key))
-#         self.coords[key] = value
+class RadiusVector:
+    def __init__(self, *args):
+        self.coords = list(args)
+
+    def __getitem__(self, item):
+        print(type(item))
+        return tuple(self.coords[item]) if type(item) == slice else self.coords[item]
+
+    def __setitem__(self, key, value):
+        print(type(key))
+        self.coords[key] = value
 
 
 # Подвиг 8. Вам нужно реализовать в программе игровое поле для игры "Крестики-нолики".
@@ -559,49 +559,49 @@
 # (списков, кортежей и т.п.).
 
 
-# class Cell:
-#     def __init__(self):
-#         self.is_free = True
-#         self.value = 0
-#
-#     def __bool__(self):
-#         return True if self.is_free is True else False
-#
-#
-# class TicTacToe:
-#     def __init__(self):
-#         self._n = 3
-#         self.pole = tuple(tuple(Cell() for _ in range(self._n)) for _ in range(self._n))
-#
-#     def clear(self):
-#         for i in self.pole:
-#             for j in i:
-#                 j.is_free = True
-#                 j.value = 0
-#
-#     def check_index(self, indx):
-#         i, j = indx
-#         if type(i) != slice and type(j) != slice:
-#             if not type(indx) == slice and not 0 <= i < len(self.pole) or not 0 <= j < len(self.pole):
-#                 raise IndexError('неверный индекс клетки')
-#
-#     def __getitem__(self, item):
-#         self.check_index(item)
-#         i, j = item
-#         if type(i) == slice:
-#             return tuple(self.pole[x][j].value for x in range(len(self.pole)))
-#         if type(j) == slice:
-#             return tuple(self.pole[i][x].value for x in range(len(self.pole)))
-#         else:
-#             return self.pole[i][j].value
-#
-#     def __setitem__(self, key, value):
-#         self.check_index(key)
-#         i, j = key
-#         if self.pole[i][j].value:
-#             raise ValueError('клетка уже занята')
-#         self.pole[i][j].value = value
-#         self.pole[i][j].is_free = False
+class Cell:
+    def __init__(self):
+        self.is_free = True
+        self.value = 0
+
+    def __bool__(self):
+        return True if self.is_free is True else False
+
+
+class TicTacToe:
+    def __init__(self):
+        self._n = 3
+        self.pole = tuple(tuple(Cell() for _ in range(self._n)) for _ in range(self._n))
+
+    def clear(self):
+        for i in self.pole:
+            for j in i:
+                j.is_free = True
+                j.value = 0
+
+    def check_index(self, indx):
+        i, j = indx
+        if type(i) != slice and type(j) != slice:
+            if not type(indx) == slice and not 0 <= i < len(self.pole) or not 0 <= j < len(self.pole):
+                raise IndexError('неверный индекс клетки')
+
+    def __getitem__(self, item):
+        self.check_index(item)
+        i, j = item
+        if type(i) == slice:
+            return tuple(self.pole[x][j].value for x in range(len(self.pole)))
+        if type(j) == slice:
+            return tuple(self.pole[i][x].value for x in range(len(self.pole)))
+        else:
+            return self.pole[i][j].value
+
+    def __setitem__(self, key, value):
+        self.check_index(key)
+        i, j = key
+        if self.pole[i][j].value:
+            raise ValueError('клетка уже занята')
+        self.pole[i][j].value = value
+        self.pole[i][j].is_free = False
 
 
 # Подвиг 9 (релакс). Объявите в программе класс Bag (сумка), объекты которого создаются командой:
@@ -647,43 +647,43 @@
 # P.S. В программе нужно объявить только классы. Выводить на экран ничего не нужно.
 
 
-# class Bag:
-#     def __init__(self, max_weight):
-#         self.max_weight = max_weight
-#         self.things = []
-#
-#     def add_thing(self, thing):
-#         self.__check_weight(thing)
-#         self.things.append(thing)
-#
-#     def __check_weight(self, obj):
-#         sum_weight = sum([x.weight for x in self.things])
-#         if (sum_weight + obj.weight) > self.max_weight:
-#             raise ValueError('превышен суммарный вес предметов')
-#
-#     def __check_index(self, indx):
-#         if not 0 <= indx < len(self.things):
-#             raise IndexError('неверный индекс')
-#
-#     def __getitem__(self, item):
-#         self.__check_index(item)
-#         return self.things[item]
-#
-#     def __setitem__(self, key, value):
-#         self.__check_index(key)
-#         if (sum([x.weight for x in self.things]) + value.weight - self.things[key].weight) > self.max_weight:
-#             raise ValueError('превышен суммарный вес предметов')
-#         self.things[key] = value
-#
-#     def __delitem__(self, key):
-#         self.__check_index(key)
-#         self.things.pop(key)
-#
-#
-# class Thing:
-#     def __init__(self, name, weight):
-#         self.name = name
-#         self.weight = weight
+class Bag:
+    def __init__(self, max_weight):
+        self.max_weight = max_weight
+        self.things = []
+
+    def add_thing(self, thing):
+        self.__check_weight(thing)
+        self.things.append(thing)
+
+    def __check_weight(self, obj):
+        sum_weight = sum([x.weight for x in self.things])
+        if (sum_weight + obj.weight) > self.max_weight:
+            raise ValueError('превышен суммарный вес предметов')
+
+    def __check_index(self, indx):
+        if not 0 <= indx < len(self.things):
+            raise IndexError('неверный индекс')
+
+    def __getitem__(self, item):
+        self.__check_index(item)
+        return self.things[item]
+
+    def __setitem__(self, key, value):
+        self.__check_index(key)
+        if (sum([x.weight for x in self.things]) + value.weight - self.things[key].weight) > self.max_weight:
+            raise ValueError('превышен суммарный вес предметов')
+        self.things[key] = value
+
+    def __delitem__(self, key):
+        self.__check_index(key)
+        self.things.pop(key)
+
+
+class Thing:
+    def __init__(self, name, weight):
+        self.name = name
+        self.weight = weight
 
 
 # Подвиг 10. Вам необходимо описывать в программе очень большие и разреженные таблицы данных (с большим числом пропусков). Для этого предлагается объявить класс SparseTable, объекты которого создаются командой:
