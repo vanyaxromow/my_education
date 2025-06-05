@@ -32,26 +32,26 @@
 # P.S. На экран ничего выводить не нужно.
 
 
-# import sys
-#
-#
-# class Player:
-#     def __init__(self, name, old, score):
-#         self.name = name
-#         self.old = old
-#         self.score = score
-#
-#     def __repr__(self):
-#         return f'Фамилия: {self.name} Возраст: {self.old} Очки: {self.score}'
-#
-#     def __bool__(self):
-#         return int(self.score) != 0
-#
-#
-# lst_in = list(map(str.strip, sys.stdin.readlines()))
-# players = [Player(*x.split(';')) for x in lst_in]
-# players_filtered = list(filter(bool, players))
-# print(players_filtered)
+import sys
+
+
+class Player:
+    def __init__(self, name, old, score):
+        self.name = name
+        self.old = old
+        self.score = score
+
+    def __repr__(self):
+        return f'Фамилия: {self.name} Возраст: {self.old} Очки: {self.score}'
+
+    def __bool__(self):
+        return int(self.score) != 0
+
+
+lst_in = list(map(str.strip, sys.stdin.readlines()))
+players = [Player(*x.split(';')) for x in lst_in]
+players_filtered = list(filter(bool, players))
+print(players_filtered)
 
 
 # Подвиг 5. Объявите в программе класс MailBox (почтовый ящик), объекты которого создаются командой:
@@ -114,41 +114,41 @@
 # Sample Output:
 
 
-# import sys
-#
-#
-# class MailBox:
-#     def __init__(self):
-#         self.inbox_list = []
-#
-#     def receive(self):
-#         lst_in = list(map(str.strip, sys.stdin.readlines()))
-#         self.inbox_list += [MailItem(*x.split(';')) for x in lst_in]
-#
-#
-# class MailItem:
-#     def __init__(self, mail_from, title, content):
-#         self.mail_from = mail_from
-#         self.title = title
-#         self.content = content
-#         self.is_read = False
-#
-#     def __repr__(self):
-#         return f'Статус: {'прочитано' if self.is_read else "не прочитано"}'
-#
-#     def set_read(self, fl_read):
-#         self.is_read = fl_read
-#
-#     def __bool__(self):
-#         return self.is_read
-#
-#
-# mail = MailBox()
-# mail.receive()
-# mail.inbox_list[0].set_read(True)
-# mail.inbox_list[-1].set_read(True)
-# inbox_list_filtered = list(filter(bool, mail.inbox_list))
-# print(mail.inbox_list)
+import sys
+
+
+class MailBox:
+    def __init__(self):
+        self.inbox_list = []
+
+    def receive(self):
+        lst_in = list(map(str.strip, sys.stdin.readlines()))
+        self.inbox_list += [MailItem(*x.split(';')) for x in lst_in]
+
+
+class MailItem:
+    def __init__(self, mail_from, title, content):
+        self.mail_from = mail_from
+        self.title = title
+        self.content = content
+        self.is_read = False
+
+    def __repr__(self):
+        return f'Статус: {'прочитано' if self.is_read else "не прочитано"}'
+
+    def set_read(self, fl_read):
+        self.is_read = fl_read
+
+    def __bool__(self):
+        return self.is_read
+
+
+mail = MailBox()
+mail.receive()
+mail.inbox_list[0].set_read(True)
+mail.inbox_list[-1].set_read(True)
+inbox_list_filtered = list(filter(bool, mail.inbox_list))
+print(mail.inbox_list)
 
 
 # Подвиг 6 (релакс). Объявите класс Line, объекты которого создаются командой:
@@ -209,24 +209,24 @@
 # P.S. На экран ничего выводить не нужно.
 
 
-# class Ellipse:
-#     def __init__(self, *args):
-#         if len(args) == 4:
-#             self.x1, self.y1, self.x2, self.y2 = args
-#
-#     def __bool__(self):
-#         return len(self.__dict__) != 0
-#
-#     def get_coords(self):
-#         if len(self.__dict__) == 0:
-#             raise AttributeError('нет координат для извлечения')
-#         return self.x1, self.y1, self.x2, self.y2
-#
-#
-# lst_geom = [Ellipse(), Ellipse(), Ellipse(1, 2, 3, 4), Ellipse(5, 6, 7, 8)]
-# for i in lst_geom:
-#     if i:
-#         i.get_coords()
+class Ellipse:
+    def __init__(self, *args):
+        if len(args) == 4:
+            self.x1, self.y1, self.x2, self.y2 = args
+
+    def __bool__(self):
+        return len(self.__dict__) != 0
+
+    def get_coords(self):
+        if len(self.__dict__) == 0:
+            raise AttributeError('нет координат для извлечения')
+        return self.x1, self.y1, self.x2, self.y2
+
+
+lst_geom = [Ellipse(), Ellipse(), Ellipse(1, 2, 3, 4), Ellipse(5, 6, 7, 8)]
+for i in lst_geom:
+    if i:
+        i.get_coords()
 
 
 # Большой подвиг 8. Вы начинаете разрабатывать игру "Сапер". Для этого вам нужно уметь представлять и управлять
@@ -305,101 +305,101 @@
 # P.S. В программе на экран выводить ничего не нужно, только объявить классы.
 
 
-# from random import randint
-#
-#
-# class GamePole:
-#     __instance = None
-#
-#     def __new__(cls, *args, **kwargs):
-#         if cls.__instance is None:
-#             cls.__instance = super().__new__(cls)
-#
-#         return cls.__instance
-#
-#     def __init__(self, N, M, total_mines):
-#         self.n = N
-#         self.m = M
-#         self.total_mines = total_mines
-#         self.__pole_cells = tuple((Cell(),) * self.n for _ in range(self.m))
-#
-#     @property
-#     def pole(self):
-#         return self.__pole_cells
-#
-#     def init_pole(self):
-#         while self.total_mines:
-#             ind = randint(0, self.n - 1)
-#             val = randint(0, self.m - 1)
-#             if not self.pole[ind][val].is_mine:
-#                 self.pole[ind][val].is_mine = True
-#                 self.total_mines -= 1
-#
-#
-#         indx = (-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)
-#         for x in range(self.n):
-#             for y in range(self.m):
-#                 self.pole[x][y].is_open = False
-#                 if not self.pole[x][y].is_mine:
-#                     mines = sum((self.pole[x+i][y+j].is_mine for i, j in indx if 0 <= i <= self.n and 0 <= j <= self.m))
-#                     self.pole[x][y].number = mines
-#
-#     def open_cell(self, i, j):
-#         if not 0 <= i <= self.n and not 0 <= j <= self.m:
-#             raise IndexError('некорректные индексы i, j клетки игрового поля')
-#
-#     def show_pole(self):
-#         for i in self.pole:
-#             print(*i)
-#
-#
-# class Cell:
-#     def __init__(self):
-#         self.__is_mine = False
-#         self.__number = None
-#         self.__is_open = None
-#
-#     @property
-#     def is_mine(self):
-#         return self.__is_mine
-#
-#     @is_mine.setter
-#     def is_mine(self, value):
-#         self.__is_valid_value(value)
-#         self.__is_mine = value
-#
-#     @property
-#     def number(self):
-#         return self.__number
-#
-#     @number.setter
-#     def number(self, value):
-#         self.__is_valid_value(value)
-#         self.__number = value
-#
-#     @property
-#     def is_open(self):
-#         return self.__is_open
-#
-#     @is_open.setter
-#     def is_open(self, value):
-#         self.__is_valid_value(value)
-#         self.__is_open = value
-#
-#     @staticmethod
-#     def __is_valid_value(value):
-#         if not type(value) is bool or type(value) == int and 0 <= value <= 8:
-#             raise ValueError("недопустимое значение атрибута")
-#
-#     def __bool__(self):
-#         return self.is_open is False
-#
-#     def __repr__(self):
-#         return '*'
-#
-#
-# pole = GamePole(10, 20, 10)  # создается поле размерами 10x20 с общим числом мин 10
-# pole.init_pole()
+from random import randint
+
+
+class GamePole:
+    __instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls.__instance is None:
+            cls.__instance = super().__new__(cls)
+
+        return cls.__instance
+
+    def __init__(self, N, M, total_mines):
+        self.n = N
+        self.m = M
+        self.total_mines = total_mines
+        self.__pole_cells = tuple((Cell(),) * self.n for _ in range(self.m))
+
+    @property
+    def pole(self):
+        return self.__pole_cells
+
+    def init_pole(self):
+        while self.total_mines:
+            ind = randint(0, self.n - 1)
+            val = randint(0, self.m - 1)
+            if not self.pole[ind][val].is_mine:
+                self.pole[ind][val].is_mine = True
+                self.total_mines -= 1
+
+
+        indx = (-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)
+        for x in range(self.n):
+            for y in range(self.m):
+                self.pole[x][y].is_open = False
+                if not self.pole[x][y].is_mine:
+                    mines = sum((self.pole[x+i][y+j].is_mine for i, j in indx if 0 <= i <= self.n and 0 <= j <= self.m))
+                    self.pole[x][y].number = mines
+
+    def open_cell(self, i, j):
+        if not 0 <= i <= self.n and not 0 <= j <= self.m:
+            raise IndexError('некорректные индексы i, j клетки игрового поля')
+
+    def show_pole(self):
+        for i in self.pole:
+            print(*i)
+
+
+class Cell:
+    def __init__(self):
+        self.__is_mine = False
+        self.__number = None
+        self.__is_open = None
+
+    @property
+    def is_mine(self):
+        return self.__is_mine
+
+    @is_mine.setter
+    def is_mine(self, value):
+        self.__is_valid_value(value)
+        self.__is_mine = value
+
+    @property
+    def number(self):
+        return self.__number
+
+    @number.setter
+    def number(self, value):
+        self.__is_valid_value(value)
+        self.__number = value
+
+    @property
+    def is_open(self):
+        return self.__is_open
+
+    @is_open.setter
+    def is_open(self, value):
+        self.__is_valid_value(value)
+        self.__is_open = value
+
+    @staticmethod
+    def __is_valid_value(value):
+        if not type(value) is bool or type(value) == int and 0 <= value <= 8:
+            raise ValueError("недопустимое значение атрибута")
+
+    def __bool__(self):
+        return self.is_open is False
+
+    def __repr__(self):
+        return '*'
+
+
+pole = GamePole(10, 20, 10)  # создается поле размерами 10x20 с общим числом мин 10
+pole.init_pole()
 
 
 # Подвиг 9 (на повторение). Объявите в программе класс Vector, объекты которого создаются командой:
@@ -430,55 +430,55 @@
 # P.S. В программе на экран выводить ничего не нужно, только объявить класс.
 
 
-# class Vector:
-#     def __init__(self, *args):
-#         self.coord = list(args)
-#
-#     @staticmethod
-#     def __valid_len_coords(v1, v2):
-#         if len(v1) != len(v2):
-#             raise ArithmeticError('размерности векторов не совпадают')
-#
-#     @staticmethod
-#     def __get_values(lst1, lst2):
-#         return zip(lst1, lst2)
-#
-#     def __add__(self, other):
-#         self.__valid_len_coords(self.coord, other.coord)
-#         lst = self.__get_values(self.coord, other.coord)
-#         return Vector(*map(lambda x: x[0] + x[1], lst))
-#
-#     def __sub__(self, other):
-#         self.__valid_len_coords(self.coord, other.coord)
-#         lst = self.__get_values(self.coord, other.coord)
-#         return Vector(*map(lambda x: x[0] - x[1], lst))
-#
-#     def __mul__(self, other):
-#         self.__valid_len_coords(self.coord, other.coord)
-#         lst = self.__get_values(self.coord, other.coord)
-#         return Vector(*map(lambda x: x[0] * x[1], lst))
-#
-#     def __iadd__(self, other):
-#         sc = other
-#         if not isinstance(other, Vector):
-#             sc = Vector(*[other for _ in range(len(self.coord))])
-#         self.__valid_len_coords(self.coord, sc.coord)
-#         lst = self.__get_values(self.coord, sc.coord)
-#         self.coord = list(map(lambda x: x[0] + x[1], lst))
-#         return self
-#
-#     def __isub__(self, other):
-#         sc = other
-#         if not isinstance(other, Vector):
-#             sc = Vector(*[other for _ in range(len(self.coord))])
-#         self.__valid_len_coords(self.coord, sc.coord)
-#         lst = self.__get_values(self.coord, sc.coord)
-#         self.coord = list(map(lambda x: x[0] - x[1], lst))
-#         return self
-#
-#     def __eq__(self, other):
-#         self.__valid_len_coords(self.coord, other.coord)
-#         lst = self.__get_values(self.coord, other.coord)
-#         return all((map(lambda x: x[0] == x[1], lst)))
+class Vector:
+    def __init__(self, *args):
+        self.coord = list(args)
+
+    @staticmethod
+    def __valid_len_coords(v1, v2):
+        if len(v1) != len(v2):
+            raise ArithmeticError('размерности векторов не совпадают')
+
+    @staticmethod
+    def __get_values(lst1, lst2):
+        return zip(lst1, lst2)
+
+    def __add__(self, other):
+        self.__valid_len_coords(self.coord, other.coord)
+        lst = self.__get_values(self.coord, other.coord)
+        return Vector(*map(lambda x: x[0] + x[1], lst))
+
+    def __sub__(self, other):
+        self.__valid_len_coords(self.coord, other.coord)
+        lst = self.__get_values(self.coord, other.coord)
+        return Vector(*map(lambda x: x[0] - x[1], lst))
+
+    def __mul__(self, other):
+        self.__valid_len_coords(self.coord, other.coord)
+        lst = self.__get_values(self.coord, other.coord)
+        return Vector(*map(lambda x: x[0] * x[1], lst))
+
+    def __iadd__(self, other):
+        sc = other
+        if not isinstance(other, Vector):
+            sc = Vector(*[other for _ in range(len(self.coord))])
+        self.__valid_len_coords(self.coord, sc.coord)
+        lst = self.__get_values(self.coord, sc.coord)
+        self.coord = list(map(lambda x: x[0] + x[1], lst))
+        return self
+
+    def __isub__(self, other):
+        sc = other
+        if not isinstance(other, Vector):
+            sc = Vector(*[other for _ in range(len(self.coord))])
+        self.__valid_len_coords(self.coord, sc.coord)
+        lst = self.__get_values(self.coord, sc.coord)
+        self.coord = list(map(lambda x: x[0] - x[1], lst))
+        return self
+
+    def __eq__(self, other):
+        self.__valid_len_coords(self.coord, other.coord)
+        lst = self.__get_values(self.coord, other.coord)
+        return all((map(lambda x: x[0] == x[1], lst)))
 
 
